@@ -1,0 +1,9 @@
+include ':customview'
+include ':hw3'
+include ':homework23'
+include ':homework22'
+include ':homework2'
+include ':myapplication'
+include ':app:hw2'
+include ':app'
+rootProject.name = "My Project"

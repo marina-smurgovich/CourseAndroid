@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Project</string>
+    <string name="text" translatable="false">Contry</string>
+    <string name="text2" translatable="false">Contry HORIZONTAL</string>
+</resources>

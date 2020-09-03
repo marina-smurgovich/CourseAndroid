@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">hw3</string>
+    <string name="Search">Search contacts</string>
+    <string name="addContact">Add contact</string>
+    <string name="phoneNumber">Phone number</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="editContact">Edit contact</string>
+    <string name="remove">Remove</string>
+    <string name="msg">выбирай</string>
+    <string name="noContact">No contacts. Please add</string>
+</resources>

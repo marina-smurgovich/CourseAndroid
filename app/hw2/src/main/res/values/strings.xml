@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">HW2</string>
+    <string name="Attractions">Attractions</string>
+    <string name="Dining">Dining</string>
+    <string name="Education">Education</string>
+    <string name="Family">Family</string>
+    <string name="Health">Health</string>
+    <string name="Office">Office</string>
+    <string name="Promotions">Promotions</string>
+    <string name="Radio">Radio</string>
+    <string name="Recipes">Recipes</string>
+    <string name="Sports">Sports</string>
+    <string name="Photo">Photo</string>
+    <string name="Title">Title</string>
+    <string name="Price">Price</string>
+    <string name="Location">Location</string>
+    <string name="Description">Description</string>
+    <string name="Inventory">Inventory</string>
+    <string name="Weight">Weight</string>
+    <string name="Sing_in">Sing in</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Remember">Remember</string>
+    <string name="Forgot">Forgot password?</string>
+    <string name="Sing_in_2">* Just sign in</string>
+    <string name="Android">Android</string>
+    <string name="posts">125 Posts</string>
+    <string name="followers">20K Followers</string>
+    <string name="following">22 Following</string>
+    <string name="Username">Username</string>
+    <string name="Address">Address</string>
+    <string name="direct">Directions</string>
+    <string name="Call">Call</string>
+    <string name="Save">Save</string>
+    <string name="website">Website</string>
+    <string name="Certificated">Certificated</string>
+    <string name="Layouts">Layouts</string>
+    <string name="Views">Views</string>
+
+</resources>

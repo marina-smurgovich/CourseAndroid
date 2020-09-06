@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark">
+        <ImageButton
+            android:id="@+id/button_back_for_screen_edit_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baseline_arrow_back_white_18dp"
+            android:layout_weight="3"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="25dp"
+            android:text="@string/editContact"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/button_done_for_screen_edit_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baseline_check_white_18dp"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/person_name_for_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:paddingTop="30dp"/>
+    <EditText
+        android:id="@+id/phone_email_for_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:paddingTop="30dp"/>
+
+    <Button
+        android:id="@+id/button_remove_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="200dp"
+        android:background="@drawable/button_remove"
+        android:text="@string/remove"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>

@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
+
+  <RadioGroup
+      android:id="@+id/radioGroup"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      tools:ignore="MissingConstraints"
+      android:layout_margin="30dp">
+    <RadioButton
+        android:id="@+id/toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/toast"
+        android:checked="true"
+        android:textSize="20sp"
+        android:paddingHorizontal="20dp"/>
+    <RadioButton
+        android:id="@+id/snackBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/snackBar"
+        android:textSize="20sp"
+        android:paddingHorizontal="20dp"/>
+  </RadioGroup>
+
 
   <com.yandex.smur.marina.customview.CustomView
       android:id="@+id/customView"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="match_parent"
-      app:circle_color="@color/colorAccent"
       app:circle_radius="@dimen/radius2"
       app:circle_radius2="@dimen/radius"
-      app:color1="@color/colorPrimaryDark" />
+      app:color1="@color/colorViolet"
+      app:color2="@color/colorRed"
+      app:color3="@color/colorGreen"
+      app:color4="@color/colorYellow"
+      app:color5="@color/colorPrimaryDark"/>
 
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

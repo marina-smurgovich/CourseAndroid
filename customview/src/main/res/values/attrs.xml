@@ -3,7 +3,10 @@
     <declare-styleable name="CustomViewParams">
         <attr name="circle_radius" format="dimension"/>
         <attr name="circle_radius2" format="dimension"/>
-        <attr name="circle_color" format="color"/>
         <attr name="color1" format="color"/>
+        <attr name="color2" format="color"/>
+        <attr name="color3" format="color"/>
+        <attr name="color4" format="color"/>
+        <attr name="color5" format="color"/>
     </declare-styleable>
 </resources>

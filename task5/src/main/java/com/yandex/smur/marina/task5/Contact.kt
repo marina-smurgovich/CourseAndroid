@@ -4,10 +4,10 @@ import com.yandex.smur.marina.hw3.Contact
 import java.io.Serializable
 
 class Contact(
-        private val id: Int,
-        private val name: String,
-        private val info: String,
-        private val image: Int) : Serializable {
+        val id: Int,
+        val name: String,
+        val info: String,
+        val image: Int) : Serializable {
 
 
 

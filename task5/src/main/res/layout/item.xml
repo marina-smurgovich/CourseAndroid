@@ -26,7 +26,7 @@
             android:textSize="20sp"
             android:textColor="@color/colorBlack"/>
         <TextView
-            android:id="@+id/item_phoneOrEmail"
+            android:id="@+id/item_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

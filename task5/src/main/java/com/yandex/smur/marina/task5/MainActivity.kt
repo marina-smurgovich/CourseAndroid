@@ -1,7 +1,9 @@
 package com.yandex.smur.marina.task5
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var emptyView : TextView
     private lateinit var viewAdapter : RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private var adapter : ContactListAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,19 +35,47 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
-
-
         addContact = findViewById(R.id.addPerson)
+        addContact.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, com.yandex.smur.marina.task5.AddPersonActivity::class.java)
+            startActivityForResult(intent, 2)
+        })
+
         emptyView = findViewById(R.id.emptyView)
         searchView = findViewById(R.id.search_edit_frame)
     }
 
-    private class ContactListAdapter (private val contacts: List<Contact>) :
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 2){
+            if (resultCode == RESULT_OK) {
+                val contact = data!!.extras!!
+                        .getSerializable(com.yandex.smur.marina.task5.Contact::class.java.simpleName)
+                        as com.yandex.smur.marina.task5.Contact?
+                updateList(contact)
+            }
+        }
+    }
+
+    private fun updateList(contact: Contact?) : Unit {
+        adapter = persons.adapter as ContactListAdapter
+        if (contact != null) {
+            adapter?.addItem(contact)
+        }
+    }
+
+//    private fun updateList(contact: com.yandex.smur.marina.hw3.Contact) {
+//        adapter = persons.adapter as MainActivity.ContactListAdapter?
+//        if (adapter != null) {
+//            adapter.addItem(contact)
+//        }
+//    }
+
+    private class ContactListAdapter ():
             RecyclerView.Adapter<ContactListAdapter.ContactItemViewHolder>() {
 
-        constructor() : this(emptyList())
 
-//        private val contacts : MutableList<Contact> = mutableListOf()
+        private val contacts : MutableList<Contact> = mutableListOf()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactItemViewHolder {
             var inflater = LayoutInflater.from(parent.context)
@@ -57,6 +88,11 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int {
             return contacts?.size ?: 0
+        }
+
+        public fun addItem(contact: Contact) : Unit {
+            contacts.add(contact)
+            notifyItemChanged(contacts.indexOf(contact))
         }
 
         private class ContactItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :

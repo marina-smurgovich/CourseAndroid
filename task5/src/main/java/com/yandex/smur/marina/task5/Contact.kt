@@ -4,11 +4,9 @@ import com.yandex.smur.marina.hw3.Contact
 import java.io.Serializable
 
 class Contact(
-        val id: Int,
         val name: String,
         val info: String,
         val image: Int) : Serializable {
-
 
 
 //    override fun equals(obj: Any?): Boolean {

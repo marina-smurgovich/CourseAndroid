@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.yandex.smur.marina.hw3.Contact
+
 
 class AddPersonActivity : AppCompatActivity() {
 
@@ -17,6 +17,8 @@ class AddPersonActivity : AppCompatActivity() {
     private lateinit var buttonBack: ImageButton
     private lateinit var buttonSave: ImageButton
     private var image: Int? = null
+    private var id: Double? = null
+    private var count : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +34,16 @@ class AddPersonActivity : AppCompatActivity() {
         buttonSave.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 val intent = Intent()
+                id = Math.random()
                 radioGroup = findViewById(R.id.radio_group)
                 val checkedId = radioGroup.checkedRadioButtonId
                 if (checkedId == -1)
                 else {
                     findRadioButton(checkedId)
                 }
-                val contact = Contact(name.text.toString(),
+                val contact = Contact(id!!, name.text.toString(),
                         info.text.toString(), image!!)
-                intent.putExtras(intent)
+                intent.putExtra(Contact::class.java.simpleName, contact)
                 setResult(RESULT_OK, intent)
                 finish()
             }

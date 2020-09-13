@@ -1,9 +1,8 @@
 package com.yandex.smur.marina.task5
-
-import com.yandex.smur.marina.hw3.Contact
 import java.io.Serializable
 
 class Contact(
+        val id: Double,
         val name: String,
         val info: String,
         val image: Int) : Serializable {

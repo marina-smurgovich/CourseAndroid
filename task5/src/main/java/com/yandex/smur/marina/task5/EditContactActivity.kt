@@ -55,5 +55,16 @@ class EditContactActivity : AppCompatActivity() {
                 finish()
             }
         })
+
+        btnBack = findViewById(R.id.button_back_for_screen_edit_contact)
+        btnBack.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+                val intent = Intent()
+                intent.putExtras(intent)
+                setResult(RESULT_FIRST_USER)
+                finish()
+            }
+
+        })
     }
 }

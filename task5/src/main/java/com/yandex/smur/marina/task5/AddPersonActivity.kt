@@ -1,6 +1,8 @@
 package com.yandex.smur.marina.task5
 
+import android.content.ContentValues
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -19,6 +21,7 @@ class AddPersonActivity : AppCompatActivity() {
     private var image: Int? = null
     private var id: Double? = null
     private var count : Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

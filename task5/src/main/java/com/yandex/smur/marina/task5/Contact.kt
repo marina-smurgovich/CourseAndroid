@@ -1,21 +1,11 @@
 package com.yandex.smur.marina.task5
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
-class Contact(
-        val id: Double,
+@Entity
+data class Contact(
+        @PrimaryKey val id: Double,
         val name: String,
         val info: String,
-        val image: Int) : Serializable {
-
-
-//    override fun equals(obj: Any?): Boolean {
-//        if (obj is Contact) {
-//            val contactObj = obj
-//            return ( id == contactObj.id && name == contactObj.name &&
-//                    info == contactObj.telOrEmail
-//                    && image == contactObj.image)
-//        }
-//        return false
-//    }
-
-}
+        val image: Int) : Serializable

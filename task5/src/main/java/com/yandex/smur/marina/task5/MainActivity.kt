@@ -1,15 +1,16 @@
 package com.yandex.smur.marina.task5
 
+import android.content.ContentValues
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,26 +26,37 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var adapter: ContactListAdapter
+    private lateinit var dataBase: SQLiteDatabase
+    private lateinit var contentValues: ContentValues
+    private lateinit var dbHelper: DBHelper
+    private var contacts: MutableList<Contact> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = ContactListAdapter(object : ContactListAdapter.OnclickListener {
-            override fun onItemClick(contact: Contact) {
-                val intent = Intent(this@MainActivity, com.yandex.smur.marina.task5.EditContactActivity::class.java)
-                intent.putExtra("contact", contact)
-                startActivityForResult(intent, 3)
-            }
+        dbHelper = DBHelper(this);
+        dataBase = dbHelper.writableDatabase;
+        contentValues = ContentValues();
 
-        })
+        contacts = addContactsFromDataBase()
+
         persons = findViewById<RecyclerView>(R.id.persons).apply {
-            layoutManager = viewManager
+            viewManager = LinearLayoutManager(this@MainActivity)
+            viewAdapter = ContactListAdapter(contacts, object : ContactListAdapter.OnclickListener {
+                override fun onItemClick(contact: Contact) {
+                    val intent = Intent(this@MainActivity, EditContactActivity::class.java)
+                    intent.putExtra("contact", contact)
+                    startActivityForResult(intent, 3)
+                }
+            })
             adapter = viewAdapter
         }
 
+        emptyView = findViewById(R.id.emptyView)
+
+        emptyList()
 
         addContact = findViewById(R.id.addPerson)
         addContact.setOnClickListener(View.OnClickListener {
@@ -52,8 +64,12 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, 2)
         })
 
-        emptyView = findViewById(R.id.emptyView)
         searchView = findViewById(R.id.search_edit_frame)
+
+        searchListener()
+    }
+
+    fun searchListener() {
         searchView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {
             }
@@ -62,65 +78,79 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                adapter = (persons.adapter as com.yandex.smur.marina.task5.MainActivity.ContactListAdapter?)!!
+                adapter = (persons.adapter as ContactListAdapter?)!!
                 if (adapter != null) {
-                    adapter.filter(editable.toString())
+                    filter(editable.toString())
                 }
             }
         })
+    }
+
+    public fun filter(text: String) {
+        val filterList: MutableList<Contact> = mutableListOf()
+        for (item in contacts) {
+            if (item.name.contains(text.toString())) {
+                filterList.add(item)
+            }
+        }
+        adapter.filterList(filterList)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
-                var contact = data!!.getSerializableExtra(Contact::class.java.simpleName)
+                var contact = data!!.getSerializableExtra(Contact::class.java.simpleName) as Contact
                 updateList(contact)
+                addContactToDataBase(contact)
             }
         }
 
         if (requestCode == 3) {
             if (resultCode == RESULT_CANCELED) {
-                var contact = data!!.getSerializableExtra(Contact::class.java.simpleName)
+                var contact = data!!.getSerializableExtra(Contact::class.java.simpleName) as Contact
                 updateListAfterRemove(contact)
+                deleteContactFromDataBase(contact)
             }
         }
 
         if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
-                var contact = data!!.getSerializableExtra(Contact::class.java.simpleName)
+                var contact = data!!.getSerializableExtra(Contact::class.java.simpleName) as Contact
                 updateListBeforeChange(contact)
+                editCountFromDataBase(contact)
             }
         }
         emptyList()
     }
 
-
+    //Work with recyclerView (update)
     private fun updateList(contact: Serializable?) {
-        adapter = (persons.adapter as com.yandex.smur.marina.task5.MainActivity.ContactListAdapter?)!!
+        adapter = (persons.adapter as ContactListAdapter?)!!
         if (contact != null) {
             adapter.addItem(contact as Contact)
         }
     }
 
     private fun updateListAfterRemove(contact: Serializable?) {
-        adapter = (persons.adapter as com.yandex.smur.marina.task5.MainActivity.ContactListAdapter?)!!
+        adapter = (persons.adapter as ContactListAdapter?)!!
         if (contact != null) {
             adapter.deleteItem(contact as Contact)
         }
+        adapter.notifyDataSetChanged()
     }
 
     private fun updateListBeforeChange(contact: Serializable?) {
-        adapter = (persons.adapter as com.yandex.smur.marina.task5.MainActivity.ContactListAdapter?)!!
+        adapter = (persons.adapter as ContactListAdapter?)!!
         if (contact != null) {
             adapter.replaceItem(contact as Contact)
         }
         adapter.notifyDataSetChanged()
     }
 
+    // RecyclerView or emptyView
     private fun emptyList() {
-        adapter = (persons.adapter as com.yandex.smur.marina.task5.MainActivity.ContactListAdapter?)!!
-        if (adapter.itemCount == 0) {
+        if (viewAdapter.itemCount == 0) {
             persons.visibility = View.GONE
             emptyView.visibility = View.VISIBLE
         } else {
@@ -129,99 +159,51 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private class ContactListAdapter(private val listener: OnclickListener?) :
-            RecyclerView.Adapter<ContactListAdapter.ContactItemViewHolder>() {
 
+    //Work with dataBase
+    fun addContactToDataBase(contact: Contact) {
+        contentValues.put("KEY_ID", contact.id)
+        contentValues.put("KEY_NAME", contact.name)
+        contentValues.put("KEY_INFO", contact.info)
+        contentValues.put("KEY_IMAGE", contact.image)
 
-        private var contacts: MutableList<Contact> = mutableListOf()
-        var count: Int = 0
+        dataBase.insert("ContactPlus", null, contentValues)
+        Log.d("mLog", " added Contact with id " + contact.id + " , name " + contact.name
+                + " , info " + contact.info + " , image " + contact.image)
+    }
 
-        public interface OnclickListener {
-            fun onItemClick(contact: Contact)
-        }
+    fun deleteContactFromDataBase(contact: Contact) {
+        val id: Double = contact.id
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactItemViewHolder {
-            var inflater = LayoutInflater.from(parent.context)
-            return ContactItemViewHolder(inflater, parent)
-        }
+        dataBase.delete("ContactPlus", "KEY_ID = " + id, null)
+    }
 
-        override fun onBindViewHolder(holder: ContactItemViewHolder, position: Int) {
-            if (listener != null) {
-                holder.bind(contacts.get(position), listener)
+    fun editCountFromDataBase(contact: Contact) {
+        contentValues.put("KEY_ID", contact.id)
+        contentValues.put("KEY_NAME", contact.name)
+        contentValues.put("KEY_INFO", contact.info)
+        contentValues.put("KEY_IMAGE", contact.image)
+
+        dataBase.update("ContactPlus", contentValues, "KEY_ID =? ", arrayOf(contact.id.toString()))
+    }
+
+    fun addContactsFromDataBase(): MutableList<Contact> {
+        val contacts: MutableList<Contact> = ArrayList()
+        val cursor: Cursor = dataBase.rawQuery("SELECT * FROM ContactPlus", null)
+
+        if (cursor != null) {
+            cursor.moveToFirst()
+            while (cursor.moveToNext()) {
+                val idCursor: Double = cursor.getDouble(0)
+                val nameCursor: String = cursor.getString(1)
+                val infoCursor: String = cursor.getString(2)
+                val imageCursor: Int = cursor.getInt(3)
+
+                val contact = Contact(idCursor, nameCursor, infoCursor, imageCursor)
+                contacts.add(contact)
             }
         }
-
-        override fun getItemCount(): Int {
-            return contacts?.size ?: 0
-        }
-
-        public fun addItem(contact: Contact): Unit {
-            contacts.add(contact as Contact)
-            notifyItemChanged(contacts.indexOf(contact))
-        }
-
-        public fun deleteItem(contact: Contact) {
-            val idContact: Double = contact.id
-            for (i in contacts.indices) {
-                if (contacts[i].id.equals(idContact)) {
-                    contacts.removeAt(i)
-                    notifyItemRemoved(i)
-                    break
-                }
-            }
-        }
-
-        public fun replaceItem(contact: Contact) {
-            val idContact: Double = contact.id
-            for (i in contacts.indices) {
-                if (contacts[i].id.equals(idContact)) {
-                    contacts[i] = contact
-                }
-            }
-        }
-
-        public fun filter(text: String) {
-            val filterList: MutableList<Contact> = mutableListOf()
-            for (item in contacts) {
-                if (item.name.toLowerCase().contains(text.toLowerCase())) {
-                    filterList.add(item)
-                }
-            }
-            filterList(filterList)
-        }
-
-        private fun filterList (filterList: MutableList<Contact>) {
-            contacts = filterList
-            notifyDataSetChanged()
-        }
-
-        private class ContactItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-                RecyclerView.ViewHolder(inflater.inflate(R.layout.item, parent, false)) {
-            private var itemName: TextView? = null
-            private var itemInfo: TextView? = null
-            private var imageView: ImageView? = null
-
-            init {
-                itemName = itemView.findViewById(R.id.item_name)
-                itemInfo = itemView.findViewById(R.id.item_info)
-                imageView = itemView.findViewById(R.id.image_item)
-            }
-
-            public fun bind(contact: Contact, listener: OnclickListener) {
-                itemName?.text = contact.name
-                itemInfo?.text = contact.info
-                imageView?.setImageResource(contact.image)
-
-                itemView.setOnClickListener(object : View.OnClickListener {
-                    override fun onClick(p0: View?) {
-                        listener?.onItemClick(contact)
-                        adapterPosition
-                    }
-                })
-
-            }
-
-        }
-
+        cursor.close()
+        return contacts
     }
 }

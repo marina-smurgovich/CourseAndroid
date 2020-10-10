@@ -9,20 +9,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var persons: RecyclerView
-    private lateinit var addContact: ImageButton
-    private lateinit var searchView: EditText
-    private lateinit var emptyView: TextView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var adapter: ContactListAdapter
@@ -54,23 +49,20 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
-        emptyView = findViewById(R.id.emptyView)
-
         emptyList()
 
-        addContact = findViewById(R.id.addPerson)
-        addContact.setOnClickListener(View.OnClickListener {
+
+        buttonAddPerson.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, com.yandex.smur.marina.task5.AddPersonActivity::class.java)
             startActivityForResult(intent, 2)
         })
 
-        searchView = findViewById(R.id.search_edit_frame)
 
         searchListener()
     }
 
-    fun searchListener() {
-        searchView.addTextChangedListener(object : TextWatcher {
+    private fun searchListener() {
+        editViewSearchEditFrame.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -152,10 +144,10 @@ class MainActivity : AppCompatActivity() {
     private fun emptyList() {
         if (viewAdapter.itemCount == 0) {
             persons.visibility = View.GONE
-            emptyView.visibility = View.VISIBLE
+            textViewEmptyView.visibility = View.VISIBLE
         } else {
             persons.visibility = View.VISIBLE
-            emptyView.visibility = View.GONE
+            textViewEmptyView.visibility = View.GONE
         }
     }
 

@@ -5,7 +5,7 @@ import java.io.Serializable
 
 @Entity
 data class Contact(
-        @PrimaryKey val id: Double,
+        @PrimaryKey val id: Double = Math.random(),
         val name: String,
         val info: String,
         val image: Int) : Serializable

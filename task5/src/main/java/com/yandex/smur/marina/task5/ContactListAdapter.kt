@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+
 public class ContactListAdapter(private var contacts: MutableList<Contact> = mutableListOf(), private val listener: OnclickListener?) :
         RecyclerView.Adapter<ContactListAdapter.ContactItemViewHolder>() {
 
@@ -30,7 +31,7 @@ public class ContactListAdapter(private var contacts: MutableList<Contact> = mut
     }
 
     override fun getItemCount(): Int {
-        return contacts?.size ?: 0
+        return contacts.size
     }
 
     public fun addItem(contact: Contact): Unit {
@@ -40,22 +41,18 @@ public class ContactListAdapter(private var contacts: MutableList<Contact> = mut
 
     public fun deleteItem(contact: Contact) {
         val idContact: Double = contact.id
-        for (i in contacts.indices) {
-            if (contacts[i].id.equals(idContact)) {
-                contacts.removeAt(i)
-                break
+        contacts.find { contact.id.equals(idContact) }
+                contacts.remove(contact)
             }
-        }
-    }
+
 
     public fun replaceItem(contact: Contact) {
         val idContact: Double = contact.id
-        for (i in contacts.indices) {
-            if (contacts[i].id.equals(idContact)) {
-                contacts[i] = contact
+        var oldContact = contacts.find { contact.id.equals(idContact) }
+        oldContact = contact
             }
-        }
-    }
+
+
 
 
     public fun filterList(filterList: MutableList<Contact>) {
@@ -65,20 +62,14 @@ public class ContactListAdapter(private var contacts: MutableList<Contact> = mut
 
     class ContactItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             RecyclerView.ViewHolder(inflater.inflate(R.layout.item, parent, false)) {
-        private var itemName: TextView? = null
-        private var itemInfo: TextView? = null
-        private var imageView: ImageView? = null
-
-        init {
-            itemName = itemView.findViewById(R.id.item_name)
-            itemInfo = itemView.findViewById(R.id.item_info)
-            imageView = itemView.findViewById(R.id.image_item)
-        }
+        private var itemName: TextView = itemView.findViewById(R.id.item_name)
+        private var itemInfo: TextView = itemView.findViewById(R.id.item_info)
+        private  var imageView: ImageView = itemView.findViewById(R.id.image_item)
 
         public fun bind(contact: Contact, listener: OnclickListener) {
-            itemName?.text = contact.name
-            itemInfo?.text = contact.info
-            imageView?.setImageResource(contact.image)
+            itemName.text = contact.name
+            itemInfo.text = contact.info
+            imageView.setImageResource(contact.image)
 
             itemView.setOnClickListener {
                 listener?.onItemClick(contact)

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_search_for_recipes"
+        android:name="com.yandex.smur.marina.finalproject.ui.home.SearchForrecipesFragment"
+        android:label="@string/search_for_recipes"
+        tools:layout="@layout/fragment_search_for_recipes" />
+
+    <fragment
+        android:id="@+id/nav_selected"
+        android:name="com.yandex.smur.marina.finalproject.ui.timer.TimerFragment"
+        android:label="@string/selected"
+        tools:layout="@layout/fragment_selected" />
+
+    <fragment
+        android:id="@+id/nav_shopping_list"
+        android:name="com.yandex.smur.marina.finalproject.ui.slideshow.SlideshowFragment"
+        android:label="@string/shopping_list"
+        tools:layout="@layout/fragment_shopping_list" />
+
+    <fragment
+        android:id="@+id/nav_timer"
+        android:name="com.yandex.smur.marina.finalproject.ui.slideshow.SlideshowFragment"
+        android:label="@string/timer"
+        tools:layout="@layout/fragment_timer" />
+</navigation>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SearchForrecipesFragment">
+
+    <Button
+        android:id="@+id/buttonSearchingByKeyword"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search_by_keyword"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="15dp"
+        />
+
+    <Button
+        android:id="@+id/buttonHealthLabels"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/health_labels"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/buttonDietLabels"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/diet_labels"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/buttonCalories"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/calories"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/buttonNutrients"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nutrients"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/textViewTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_button"
+        android:layout_gravity="bottom|center"/>
+
+</LinearLayout>

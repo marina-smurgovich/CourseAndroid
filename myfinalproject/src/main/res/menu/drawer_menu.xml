@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/searchForrecipesFragment"
+        android:title="@string/fragment_search_for_recipes" />
+    <item
+        android:id="@+id/selectedFragment"
+        android:title="@string/selected_Fragment"/>
+    <item
+        android:id="@+id/shoppingListFragment"
+        android:title="@string/fragment_shopping_list"/>
+    <item
+        android:id="@+id/timerFragment"
+        android:title="@string/fragment_timer"/>
+
+</menu>

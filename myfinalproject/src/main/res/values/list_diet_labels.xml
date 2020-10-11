@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_diet_labels">
+        <item>Balanced (Protein/Fat/Carb values in 15/35/50 ratio)</item>
+        <item>High-Fiber (More than 5g fiber per serving)</item>
+        <item>High-Protein (More than 50% of total calories from proteins)</item>
+        <item>Low-Carb (Less than 20% of total calories from carbs)</item>
+        <item>Low-Fat (Less than 15% of total calories from fat)</item>
+        <item>Low-Sodium (Less than 140mg Na per serving)</item>
+    </string-array>
+</resources>

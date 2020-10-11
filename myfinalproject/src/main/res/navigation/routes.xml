@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/routes"
+    app:startDestination="@id/searchForrecipesFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/searchForrecipesFragment"
+        android:name="com.yandex.smur.marina.myfinalproject.SearchForrecipesFragment"
+        android:label="Fragment search for recipes"
+        tools:layout="@layout/fragment_search_forrecipes" />
+    <fragment
+        android:id="@+id/selectedFragment"
+        android:name="com.yandex.smur.marina.myfinalproject.SelectedFragment"
+        android:label="Fragment selected"
+        tools:layout="@layout/fragment_selected" />
+    <fragment
+        android:id="@+id/shoppingListFragment"
+        android:name="com.yandex.smur.marina.myfinalproject.ShoppingListFragment"
+        android:label="Fragment shopping list"
+        tools:layout="@layout/fragment_shopping_list" />
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.yandex.smur.marina.myfinalproject.TimerFragment"
+        android:label="Fragment timer"
+        tools:layout="@layout/fragment_timer" />
+</navigation>

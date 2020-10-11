@@ -50,7 +50,6 @@ class DialogSearchingByKeyword() : DialogFragment() {
                     }
                 })
 
-//                text.findViewById<EditText>(R.id.editTextSearchingByKeyword)
 
 
         return builder.create();

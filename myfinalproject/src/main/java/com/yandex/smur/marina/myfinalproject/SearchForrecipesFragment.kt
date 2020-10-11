@@ -31,10 +31,10 @@ class SearchForrecipesFragment : Fragment()
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    //!!!!!!!!!!!!!!!!!!!!!!!
     var srtFr: String? = null
 
-
+    //!!!!!!!!!!!!!!!!!!!!!!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -42,11 +42,11 @@ class SearchForrecipesFragment : Fragment()
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    //!!!!!!!!!!!!!!!!!!!!!!!
     override fun onDialogPositiveClick(string: String){
         srtFr = string
     }
-
+    //!!!!!!!!!!!!!!!!!!!!!!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val fragmentLayout = inflater.inflate(R.layout.fragment_search_forrecipes, container, false)
@@ -59,7 +59,7 @@ class SearchForrecipesFragment : Fragment()
             }
 
         })
-
+//!!!!!!!!!!!!!!!!!!!!!!!
         fragmentLayout.buttonSearchingByKeyword.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
                 val dialogSearchingByKeyword = DialogSearchingByKeyword()
@@ -71,6 +71,13 @@ class SearchForrecipesFragment : Fragment()
         })
 
         fragmentLayout.textViewTest.text = srtFr
+//!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
 
         fragmentLayout.buttonHealthLabels.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {

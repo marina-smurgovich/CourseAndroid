@@ -5,4 +5,5 @@ include ':customview'
 include ':hw3'
 include ':app:hw2'
 include ':app'
+include ':myfinalproject'
 rootProject.name = "My Project"

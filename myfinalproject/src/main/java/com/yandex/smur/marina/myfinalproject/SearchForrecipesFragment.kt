@@ -1,114 +1,95 @@
 package com.yandex.smur.marina.myfinalproject
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import com.yandex.smur.marina.myfinalproject.dialogs.DialogDietLabels
 import com.yandex.smur.marina.myfinalproject.dialogs.DialogHealthLabels
 import com.yandex.smur.marina.myfinalproject.dialogs.DialogSearchingByKeyword
 import com.yandex.smur.marina.myfinalproject.search_result.ActivitySearchResult
-import kotlinx.android.synthetic.main.fragment_search_forrecipes.view.*
+import com.yandex.smur.marina.myfinalproject.search_result.SearchObject
+import kotlinx.android.synthetic.main.fragment_search_forrecipes.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD = 10
 
 /**
  * A simple [Fragment] subclass.
  * Use the [SearchForrecipesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SearchForrecipesFragment : Fragment()
-        , DialogSearchingByKeyword.DialogSearchingByKeywordListener
-{
+class SearchForrecipesFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    //!!!!!!!!!!!!!!!!!!!!!!!
-    var srtFr: String? = null
+    private val param1 by lazy { arguments?.getString(ARG_PARAM1) }
+    private val param2 by lazy { arguments?.getString(ARG_PARAM2) }
 
     //!!!!!!!!!!!!!!!!!!!!!!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    lateinit var searchByKeyword: String
+
+//    override fun onDialogPositiveClick(string: String) {
+//        srtFr = string
+//    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+            inflater.inflate(R.layout.fragment_search_forrecipes, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        searchButton.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+//                val intent = Intent(th)
+//                val searchObject = SearchObject(searchByKeyword, "", "", "", "")
+//                intent.putExtra("mySearchObject", searchObject)
+//                startActivity(intent)
+            }
+
+        })
+
+//        searchButton.setOnClickListener {
+//            startActivity(Intent(activity, ActivitySearchResult::class.java)) }
+
+        buttonSearchingByKeyword.setOnClickListener {
+            val dialogSearchingByKeyword = DialogSearchingByKeyword().newInstance(102)
+            dialogSearchingByKeyword.setTargetFragment(this, REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD)
+            fragmentManager?.let { it1 -> dialogSearchingByKeyword.show(it1, "SearchingByKeyword") }
+
+//                    .apply {
+//                setTargetFragment(this, REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD)
+//            }
+//            activity?.supportFragmentManager?.let {dialogSearchingByKeyword.show(it, "SearchingByKeyword") }
+        }
+
+        buttonHealthLabels.setOnClickListener {
+            activity?.supportFragmentManager?.let { DialogHealthLabels().show(it, "HealthLabels") }
+        }
+        buttonDietLabels.setOnClickListener {
+            activity?.supportFragmentManager?.let { DialogDietLabels().show(it, "DietLabels") }
+        }
+        buttonCalories.setOnClickListener { TODO("Not yet implemented") }
+        buttonNutrients.setOnClickListener { TODO("Not yet implemented") }
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD ->
+                if (resultCode == Activity.RESULT_OK) {
+                val arguments : Bundle? = data!!.extras
+                    searchByKeyword = arguments!!.get("editViewText").toString()
+//                textViewTest.text = strFr
+                }
+
         }
     }
-    //!!!!!!!!!!!!!!!!!!!!!!!
-    override fun onDialogPositiveClick(string: String){
-        srtFr = string
-    }
-    //!!!!!!!!!!!!!!!!!!!!!!!
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val fragmentLayout = inflater.inflate(R.layout.fragment_search_forrecipes, container, false)
-
-        val navController = NavHostFragment.findNavController(this)
-
-        fragmentLayout.searchButton.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                startActivity(Intent(activity, ActivitySearchResult::class.java))
-            }
-
-        })
-//!!!!!!!!!!!!!!!!!!!!!!!
-        fragmentLayout.buttonSearchingByKeyword.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                val dialogSearchingByKeyword = DialogSearchingByKeyword()
-                dialogSearchingByKeyword.setTargetFragment(this@SearchForrecipesFragment, 1)
-                dialogSearchingByKeyword.show(activity!!.supportFragmentManager, "SearchingByKeyword")
-
-            }
-
-        })
-
-        fragmentLayout.textViewTest.text = srtFr
-//!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-        fragmentLayout.buttonHealthLabels.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                val dialogHealthLabels : DialogHealthLabels = DialogHealthLabels()
-                dialogHealthLabels.show(activity!!.supportFragmentManager, "HealthLabels")
-            }
-        })
-
-        fragmentLayout.buttonDietLabels.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                val dialogDietLabels : DialogDietLabels = DialogDietLabels()
-                dialogDietLabels.show(activity!!.supportFragmentManager, "DietLabels")
-            }
-        })
-
-        fragmentLayout.buttonCalories.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        fragmentLayout.buttonNutrients.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                TODO("Not yet implemented")
-            }
-        })
-
-
-        return fragmentLayout
-    }
-
 
     companion object {
         /**
@@ -129,7 +110,4 @@ class SearchForrecipesFragment : Fragment()
                     }
                 }
     }
-
-
-
 }

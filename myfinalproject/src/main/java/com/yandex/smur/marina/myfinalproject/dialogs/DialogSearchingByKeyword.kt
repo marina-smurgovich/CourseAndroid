@@ -40,7 +40,7 @@ class DialogSearchingByKeyword() : DialogFragment() {
         return AlertDialog.Builder(activity)
                 .setTitle(R.string.title_searching_by_keyword)
                 .setMessage(R.string.text_searching_by_keyword)
-                .setView(inflater.inflate(R.layout.dialog_searching_by_keyword, null))
+                .setView(view)
 
                 .setPositiveButton(R.string.add_keyword, object : DialogInterface.OnClickListener {
                     override fun onClick(dialog: DialogInterface?, whichButton: Int) {

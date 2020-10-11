@@ -45,10 +45,10 @@ class SearchForrecipesFragment : Fragment() {
 
         searchButton.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
-//                val intent = Intent(th)
-//                val searchObject = SearchObject(searchByKeyword, "", "", "", "")
-//                intent.putExtra("mySearchObject", searchObject)
-//                startActivity(intent)
+                val intent = Intent(activity, ActivitySearchResult::class.java)
+                val searchObject = SearchObject(searchByKeyword, "", "", "", "")
+                intent.putExtra("mySearchObject", searchObject)
+                startActivity(intent)
             }
 
         })
@@ -83,9 +83,7 @@ class SearchForrecipesFragment : Fragment() {
         when (requestCode) {
             REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD ->
                 if (resultCode == Activity.RESULT_OK) {
-                val arguments : Bundle? = data!!.extras
-                    searchByKeyword = arguments!!.get("editViewText").toString()
-//                textViewTest.text = strFr
+                    searchByKeyword = data?.getStringExtra("editViewText") ?: " "
                 }
 
         }

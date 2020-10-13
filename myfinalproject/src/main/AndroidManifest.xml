@@ -20,6 +20,8 @@
         </activity>
 
         <activity android:name=".search_result.ActivitySearchResult"/>
+        <activity android:name=".search_result.ActivityWithRecipe"/>
+
     </application>
 
 </manifest>

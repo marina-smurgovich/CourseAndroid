@@ -3,16 +3,20 @@ package com.yandex.smur.marina.myfinalproject.search_result
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.yandex.smur.marina.myfinalproject.R
-import com.yandex.smur.marina.myfinalproject.RecipeDataModel
+import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
 import com.yandex.smur.marina.myfinalproject.api.RecipesDataModelMapper
 import com.yandex.smur.marina.myfinalproject.api.RecipesRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 
 class ActivitySearchResult : AppCompatActivity() {
@@ -22,6 +26,7 @@ class ActivitySearchResult : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var adapter: ListSearchResultAdapter
     private var listSearchResultAdapter: MutableList<RecipeDataModel> = ArrayList()
+    private var disposable : Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +37,27 @@ class ActivitySearchResult : AppCompatActivity() {
         val searchObject : SearchObject = arguments!!.get("mySearchObject") as SearchObject
         ////
 
-        RecipesRepositoryImpl(
+        disposable = RecipesRepositoryImpl(
                 okHttpClient = OkHttpClient(),
                 recipesDataModelMapper = RecipesDataModelMapper()
-        ).getRecipes(searchObject.searchingByKeyword)
+        ).getRecipes(searchObject.searchingByKeyword) // позже буду сюда закидывать полностью объект для поиска
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {list -> Log.d("ActivitySearchResult", list.toString())},
                         {throwable -> Log.d("ActivitySearchResult", throwable.toString())}
                 )
+
+        val host : NavHostFragment = supportFragmentManager
+                .findFragmentById(R.id.navFragment) as NavHostFragment? ?: return
+        val navController = host.navController
+
+        //включила боковое меню
+        val sideBar = findViewById<NavigationView>(R.id.nav_view)
+        sideBar?.setupWithNavController(navController)
+
+        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = drawer_layout)
+        val tooBar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        tooBar.setupWithNavController(navController, appBarConfiguration)
 
         recyclerView = findViewById<RecyclerView>(R.id.listWithResultOfSearch).apply {
             viewManager = LinearLayoutManager(this@ActivitySearchResult)
@@ -53,6 +70,8 @@ class ActivitySearchResult : AppCompatActivity() {
             })
             adapter = viewAdapter
         }
+
+
     }
 
 }

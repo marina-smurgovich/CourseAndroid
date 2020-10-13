@@ -1,9 +1,9 @@
 package com.yandex.smur.marina.myfinalproject.api
 
-import com.yandex.smur.marina.myfinalproject.RecipeDataModel
+import android.util.Log
 import org.json.JSONObject
 
-class RecipesDataModelMapper : (String) -> List<RecipeDataModel>{
+class RecipesDataModelMapper : (String) -> List<RecipeDataModel> {
 
     override fun invoke(jsonData: String): List<RecipeDataModel> {
         val jsonObject = JSONObject(jsonData)
@@ -11,23 +11,23 @@ class RecipesDataModelMapper : (String) -> List<RecipeDataModel>{
         if (jsonHintsArray.length() != 0) {
             val itemList = mutableListOf<RecipeDataModel>()
             for (index in 0 until jsonHintsArray.length()) {
-
-                val recipeDataModel= with(jsonHintsArray.getJSONObject(index)) {
-                     RecipeDataModel (
-                            urlImage = getString("image"),
-                            title = getString("label"),
-                            numberOfServings = getInt("yield"),
-                            energy = getInt("calories"),
-                            protein = getInt("PROCNT"),
-                            fat = getInt("FAT"),
-                            carbs = getInt("CHOCDF"),
-                            listOfIngredients = getJSONArray("ingredients"),
-                            urlRecipe = getString("url")
+                val dataModel = with(jsonHintsArray.getJSONObject(index)) {
+                    RecipeDataModel(
+                            urlImage = getJSONObject("recipe").getString("image"),
+                            title = getJSONObject("recipe").getString("label"),
+                            numberOfServings = getJSONObject("recipe").getDouble("yield"),
+                            energy = getJSONObject("recipe").getDouble("calories"),
+//                            protein = getJSONObject("recipe").getJSONObject("PROCNT").getInt("quantity"),
+//                            fat = getJSONObject("recipe").getInt("FAT"),
+//                            carbs = getJSONObject("recipe").getInt("CHOCDF"),
+//                            listOfIngredients = getJSONArray("ingredients"),
+                            urlRecipe = getJSONObject("recipe").getString("url")
                     )
                 }
-                itemList.add(recipeDataModel)
+                itemList.add(dataModel)
             }
             return itemList
+            Log.d("ActivitySearchResult", itemList.toString())
         }
         return emptyList()
     }

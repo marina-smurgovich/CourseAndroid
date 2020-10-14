@@ -15,10 +15,12 @@ class RecipesRepositoryImpl(private val okHttpClient: OkHttpClient,
                             private val recipesDataModelMapper: (String) -> List<RecipeDataModel>
 ) : RecipesRepository {
 
-    override fun getRecipes(searchingByKeyword: String):
+    override fun getRecipes(
+            searchingByKeyword: String
+    ):
             Single<List<RecipeDataModel>>
     {
-        val url = "https://test-es.edamam.com/search?q=chiken&app_id=03a0780b&app_key=e6747edf66aad2ed5672237e65ab4b94"
+        val url = "https://test-es.edamam.com/search?q=apple&app_id=03a0780b&app_key=e6747edf66aad2ed5672237e65ab4b94"
         val request = Builder().url(url).build()
         return Single.create<String> {emitter ->
             okHttpClient.newCall(request).execute().use {response ->

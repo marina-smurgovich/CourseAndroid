@@ -11,7 +11,7 @@ data class RecipeDataModel(
 //        val protein: Int,
 //        val fat: Int,
 //        val carbs: Int,
-//        val listOfIngredients: Array<Ingredients>,
+//        val listOfIngredients: List<Ingredient>,
         val urlRecipe: String
 )
     : Serializable {

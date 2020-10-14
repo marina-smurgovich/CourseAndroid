@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:padding="1dp"/>
     <TextView
-        android:id="@+id/textViewOfItem"
+        android:id="@+id/textViewOfIngredient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="1dp"/>

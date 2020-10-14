@@ -9,13 +9,15 @@
     <ImageView
         android:id="@+id/imageViewFromItemForListForSearchResult"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:layout_weight="4"/>
     <TextView
         android:id="@+id/textViewFromItemForListForSearchResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingHorizontal="15dp"/>
+        android:paddingHorizontal="15dp"
+        android:ellipsize="end"
+        android:maxLines="2"/>
 
 </LinearLayout>

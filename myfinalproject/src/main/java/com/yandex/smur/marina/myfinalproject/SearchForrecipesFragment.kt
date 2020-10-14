@@ -31,7 +31,7 @@ class SearchForrecipesFragment : Fragment() {
     private val param2 by lazy { arguments?.getString(ARG_PARAM2) }
 
     //!!!!!!!!!!!!!!!!!!!!!!!
-    lateinit var searchByKeyword: String
+     var searchByKeyword: String? = null
 
 //    override fun onDialogPositiveClick(string: String) {
 //        srtFr = string
@@ -46,7 +46,7 @@ class SearchForrecipesFragment : Fragment() {
         searchButton.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
                 val intent = Intent(activity, ActivitySearchResult::class.java)
-                val searchObject = SearchObject(searchByKeyword, "", "", "", "")
+                val searchObject = SearchObject(searchByKeyword!!, "", "", "", "")
                 intent.putExtra("mySearchObject", searchObject)
                 startActivity(intent)
             }

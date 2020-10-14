@@ -21,6 +21,7 @@
 
         <activity android:name=".search_result.ActivitySearchResult"/>
         <activity android:name=".search_result.ActivityWithRecipe"/>
+        <activity android:name=".search_result.ActivityWebPageWithRecipe"/>
 
     </application>
 

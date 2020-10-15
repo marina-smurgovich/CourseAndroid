@@ -12,7 +12,7 @@
     <string name="health_labels">Health labels</string>
     <string name="diet_labels">Diet labels</string>
     <string name="calories">Calories</string>
-    <string name="nutrients">Nutrients</string>
+    <string name="cooking_time">Cooking time</string>
 
 
     <string name="edit_keyword">Edit keyword</string>
@@ -33,6 +33,13 @@
     <string name="button_for_view_recipe">See the full recipe</string>
     <string name="button_back">Back</string>
     <string name="button_add_favourites">Add to favourites</string>
+
+    <string name="edit">Edit</string>
+    <string name="kcal">kcal</string>
+    <string name="min">min</string>
+    <string name="calories_item">Calories</string>
+    <string name="enter_calories">Enter calories</string>
+    <string name="cooking_time_item">Cooking time</string>
 
 
 

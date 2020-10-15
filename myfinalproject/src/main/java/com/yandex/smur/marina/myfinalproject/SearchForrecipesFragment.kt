@@ -3,13 +3,12 @@ package com.yandex.smur.marina.myfinalproject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.yandex.smur.marina.myfinalproject.dialogs.DialogDietLabels
-import com.yandex.smur.marina.myfinalproject.dialogs.DialogHealthLabels
-import com.yandex.smur.marina.myfinalproject.dialogs.DialogSearchingByKeyword
+import com.yandex.smur.marina.myfinalproject.dialogs.*
 import com.yandex.smur.marina.myfinalproject.search_result.ActivitySearchResult
 import com.yandex.smur.marina.myfinalproject.search_result.SearchObject
 import kotlinx.android.synthetic.main.fragment_search_forrecipes.*
@@ -19,6 +18,10 @@ import kotlinx.android.synthetic.main.fragment_search_forrecipes.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private const val REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD = 10
+private const val REQUEST_CODE_DIALOG_HEALTH_LABELS = 11
+private const val REQUEST_CODE_DIALOG_DIET_LABELS = 12
+private const val REQUEST_CODE_DIALOG_CALORIES = 13
+private const val REQUEST_CODE_DIALOG_COOKING_TIME = 13
 
 /**
  * A simple [Fragment] subclass.
@@ -30,12 +33,11 @@ class SearchForrecipesFragment : Fragment() {
     private val param1 by lazy { arguments?.getString(ARG_PARAM1) }
     private val param2 by lazy { arguments?.getString(ARG_PARAM2) }
 
-    //!!!!!!!!!!!!!!!!!!!!!!!
-     var searchByKeyword: String? = null
-
-//    override fun onDialogPositiveClick(string: String) {
-//        srtFr = string
-//    }
+    var searchByKeyword: String = " "
+    var arrayHealthLabels: ArrayList<String>? = null
+    var dietLabels: ArrayList<String>? = null
+    var calories: String = " "
+    var cookingTime: String = " "
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_search_forrecipes, container, false)
@@ -43,39 +45,43 @@ class SearchForrecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchButton.setOnClickListener(object : View.OnClickListener{
+        searchButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 val intent = Intent(activity, ActivitySearchResult::class.java)
-                val searchObject = SearchObject(searchByKeyword!!, "", "", "", "")
+                val searchObject = SearchObject(searchByKeyword, arrayHealthLabels, dietLabels, calories,  cookingTime)
                 intent.putExtra("mySearchObject", searchObject)
                 startActivity(intent)
             }
-
         })
-
-//        searchButton.setOnClickListener {
-//            startActivity(Intent(activity, ActivitySearchResult::class.java)) }
 
         buttonSearchingByKeyword.setOnClickListener {
             val dialogSearchingByKeyword = DialogSearchingByKeyword().newInstance(102)
             dialogSearchingByKeyword.setTargetFragment(this, REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD)
             fragmentManager?.let { it1 -> dialogSearchingByKeyword.show(it1, "SearchingByKeyword") }
-
-//                    .apply {
-//                setTargetFragment(this, REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD)
-//            }
-//            activity?.supportFragmentManager?.let {dialogSearchingByKeyword.show(it, "SearchingByKeyword") }
         }
 
         buttonHealthLabels.setOnClickListener {
-            activity?.supportFragmentManager?.let { DialogHealthLabels().show(it, "HealthLabels") }
+            val dialogHealthLabels = DialogHealthLabels().newInstance(103)
+            dialogHealthLabels.setTargetFragment(this, REQUEST_CODE_DIALOG_HEALTH_LABELS)
+            fragmentManager?.let { it1 -> dialogHealthLabels.show(it1, "HealthLabels") }
         }
-        buttonDietLabels.setOnClickListener {
-            activity?.supportFragmentManager?.let { DialogDietLabels().show(it, "DietLabels") }
-        }
-        buttonCalories.setOnClickListener { TODO("Not yet implemented") }
-        buttonNutrients.setOnClickListener { TODO("Not yet implemented") }
 
+        buttonDietLabels.setOnClickListener {
+            val dialogDietLabels = DialogDietLabels().newInstance(104)
+            dialogDietLabels.setTargetFragment(this, REQUEST_CODE_DIALOG_DIET_LABELS)
+            fragmentManager?.let { it1 -> dialogDietLabels.show(it1, "DietLabels") }
+        }
+        buttonCalories.setOnClickListener {
+            val dialogCalories = DialogCalories().newInstance(105)
+            dialogCalories.setTargetFragment(this, REQUEST_CODE_DIALOG_CALORIES)
+            fragmentManager?.let { it1 -> dialogCalories.show(it1, "Calories") }
+        }
+
+        buttonCookingTime.setOnClickListener {
+            val dialogCookingTime = DialogCookingTime().newInstance(106)
+            dialogCookingTime.setTargetFragment(this, REQUEST_CODE_DIALOG_COOKING_TIME)
+            fragmentManager?.let { it1 -> dialogCookingTime.show(it1, "CookingTime") }
+        }
 
     }
 
@@ -85,6 +91,28 @@ class SearchForrecipesFragment : Fragment() {
                 if (resultCode == Activity.RESULT_OK) {
                     searchByKeyword = data?.getStringExtra("editViewText") ?: " "
                 }
+            REQUEST_CODE_DIALOG_HEALTH_LABELS ->
+                if (resultCode == Activity.RESULT_OK) {
+                    arrayHealthLabels = data?.getStringArrayListExtra("DialogHealthLabels") as ArrayList<String>
+                            ?: null
+                    Log.d("ActivitySearchResult", arrayHealthLabels.toString())
+                }
+            REQUEST_CODE_DIALOG_DIET_LABELS ->
+                if (resultCode == Activity.RESULT_OK) {
+                    dietLabels = data?.getStringArrayListExtra("DialogDietLabels") as ArrayList<String>
+                            ?: null
+                    Log.d("ActivitySearchResult", dietLabels.toString())
+                }
+            REQUEST_CODE_DIALOG_CALORIES ->
+                if (resultCode == Activity.RESULT_OK) {
+                    calories = data?.getStringExtra("DialogCalories") ?: " "
+                    Log.d("ActivitySearchResult", calories.toString())
+                }
+            REQUEST_CODE_DIALOG_COOKING_TIME ->
+                if (resultCode == Activity.RESULT_OK) {
+                cookingTime = data?.getStringExtra("DialogCalories") ?: " "
+                Log.d("ActivitySearchResult", cookingTime.toString())
+            }
 
         }
     }

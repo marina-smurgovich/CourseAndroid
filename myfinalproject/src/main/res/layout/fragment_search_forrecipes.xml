@@ -49,11 +49,11 @@
         android:layout_marginBottom="15dp"/>
 
     <Button
-        android:id="@+id/buttonNutrients"
+        android:id="@+id/buttonCookingTime"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nutrients"
+        android:text="@string/cooking_time"
         android:textAllCaps="false"
         android:textSize="20sp"
         android:layout_marginBottom="15dp"/>

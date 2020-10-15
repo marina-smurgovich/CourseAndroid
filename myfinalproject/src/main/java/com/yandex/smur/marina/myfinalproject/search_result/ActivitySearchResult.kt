@@ -31,8 +31,10 @@ class ActivitySearchResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
 
-        val arguments : Bundle? = intent.extras
-        searchObject = arguments!!.get("mySearchObject") as SearchObject
+        val arguments : Bundle = intent.extras!!
+        searchObject = arguments.get("mySearchObject") as SearchObject
+
+        Log.d("ActivitySearchResult", searchObject!!.searchingByKeyword)
 
         settingActivity ()
 
@@ -50,7 +52,7 @@ class ActivitySearchResult : AppCompatActivity() {
             })
             viewManager = LinearLayoutManager(this@ActivitySearchResult)
         }
-        fetchNewsList(" ")
+        fetchNewsList(searchObject!!)
 
     }
 
@@ -59,12 +61,12 @@ class ActivitySearchResult : AppCompatActivity() {
     }
 
     private fun fetchNewsList(
-            str: String
+            searchObject: SearchObject
     ) {
         disposable = RecipesRepositoryImpl(
                 okHttpClient = OkHttpClient(),
                 recipesDataModelMapper = RecipesDataModelMapper()
-        ).getRecipes(str) // позже буду сюда закидывать полностью объект для поиска
+        ).getRecipes(searchObject) // позже буду сюда закидывать полностью объект для поиска
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {list ->

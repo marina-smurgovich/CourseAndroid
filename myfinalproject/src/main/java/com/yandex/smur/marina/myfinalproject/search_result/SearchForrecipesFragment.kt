@@ -1,4 +1,4 @@
-package com.yandex.smur.marina.myfinalproject
+package com.yandex.smur.marina.myfinalproject.search_result
 
 import android.app.Activity
 import android.content.Intent
@@ -7,10 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.dialogs.*
-import com.yandex.smur.marina.myfinalproject.search_result.ActivitySearchResult
-import com.yandex.smur.marina.myfinalproject.search_result.SearchObject
 import kotlinx.android.synthetic.main.fragment_search_forrecipes.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,10 +47,16 @@ class SearchForrecipesFragment : Fragment() {
 
         searchButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                val intent = Intent(activity, ActivitySearchResult::class.java)
-                val searchObject = SearchObject(searchByKeyword, arrayHealthLabels, dietLabels, calories,  cookingTime)
-                intent.putExtra("mySearchObject", searchObject)
-                startActivity(intent)
+                if (searchByKeyword != " ") {
+                    val intent = Intent(activity, ActivitySearchResult::class.java)
+                    val searchObject = SearchObject(searchByKeyword, arrayHealthLabels, dietLabels, calories, cookingTime)
+                    intent.putExtra("mySearchObject", searchObject)
+                    setToZeroSearchObject ()
+                    startActivity(intent)
+
+                }
+                else
+                    Toast.makeText(activity, "Enter a what you have eaten", Toast.LENGTH_LONG).show()
             }
         })
 
@@ -115,6 +121,14 @@ class SearchForrecipesFragment : Fragment() {
             }
 
         }
+    }
+
+    private fun setToZeroSearchObject () {
+        searchByKeyword = " "
+        arrayHealthLabels = null
+        dietLabels = null
+        calories = " "
+        cookingTime = " "
     }
 
     companion object {

@@ -4,86 +4,17 @@
         <item>Alcohol-free
             (No alcohol used or contained)
         </item>
-        <item>Celery-free
-            (Does not contain celery or derivatives)
-        </item>
-        <item>Crustacean-free
-            (Does not contain crustaceans (shrimp, lobster etc.) or derivatives)
-        </item>
-        <item>Dairy-free
-            (No dairy; No lactose)
-        </item>
-        <item>Egg-free
-            (No eggs or products containing eggs)
-        </item>
-        <item>Fish-free
-            (No fish or fish derivatives)
-        </item>
-        <item>Gluten-free
-            (No ingredients containing gluten)
-        </item>
-        <item>Keto
-            (Maximum 7 grams of net carbs per serving)
-        </item>
-        <item>Kidney friendly
-            (Per serving – phosphorus less than 250 mg AND potassium less than 500 mg AND sodium: less than 500 mg)
-        </item>
-        <item>Kosher
-            (Contains only ingredients allowed by the kosher diet. However it does not guarantee kosher preparation of the ingredients themselves)
-        </item>
-        <item>Low potassium
-            (Less than 150mg per serving)
-        </item>
-        <item>Lupine-free
-            (Does not contain lupine or derivatives)
-        </item>
-        <item>Mustard-free
-            (Does not contain mustard or derivatives)
-        </item>
-        <item>No oil added
-            (No oil added except to what is contained in the basic ingredients)
-        </item>
-        <item>No-sugar
-            (No simple sugars – glucose, dextrose, galactose, fructose, sucrose, lactose, maltose)
-        </item>
-        <item>Paleo
-            (Excludes what are perceived to be agricultural products; grains, legumes, dairy products, potatoes, refined salt, refined sugar, and processed oils)
-        </item>
         <item>Peanut-free
             (No peanuts or products containing peanuts)
         </item>
-        <item>Pescatarian
-            (Does not contain meat or meat based products, can contain dairy and fish)
-        </item>
-        <item>Pork-free
-            (Does not contain pork or derivatives)
-        </item>
-        <item>Red meat-free
-            (Does not contain beef, lamb, pork, duck, goose, game, horse, and other types of red meat or products containing red meat.)
-        </item>
-        <item>Sesame-free
-            (Does not contain sesame seed or derivatives)
-        </item>
-        <item>Shellfish-free
-            (No shellfish or shellfish derivatives)
-        </item>
-        <item>Soy-free
-            (No soy or products containing soy)
-        </item>
         <item>Sugar-conscious
             (Less than 4g of sugar per serving)
-        </item>
-        <item>Tree-Nut-free
-            (No tree nuts or products containing tree nuts)
         </item>
         <item>Vegan
             (No meat, poultry, fish, dairy, eggs or honey)
         </item>
         <item>Vegetarian
             (No meat, poultry, or fish)
-        </item>
-        <item>Wheat-free
-            (No wheat, can have gluten though)
         </item>
     </string-array>
 

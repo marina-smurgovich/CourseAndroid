@@ -20,8 +20,8 @@
         </activity>
 
         <activity android:name=".search_result.ActivitySearchResult"/>
-        <activity android:name=".search_result.ActivityWithRecipe"/>
-        <activity android:name=".search_result.ActivityWebPageWithRecipe"/>
+        <activity android:name=".recipe_activity.ActivityWithRecipe"/>
+        <activity android:name=".activity_web_page.ActivityWebPageWithRecipe"/>
 
     </application>
 

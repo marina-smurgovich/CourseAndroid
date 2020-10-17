@@ -1,6 +1,9 @@
 package com.yandex.smur.marina.myfinalproject.api
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import org.json.JSONArray
 import org.json.JSONObject
 
 class RecipesDataModelMapper : (String) -> List<RecipeDataModel> {
@@ -17,10 +20,10 @@ class RecipesDataModelMapper : (String) -> List<RecipeDataModel> {
                             title = getJSONObject("recipe").getString("label"),
                             numberOfServings = getJSONObject("recipe").getDouble("yield"),
                             energy = getJSONObject("recipe").getDouble("calories"),
-//                            protein = getJSONObject("recipe").getJSONObject("PROCNT").getInt("quantity"),
-//                            fat = getJSONObject("recipe").getInt("FAT"),
-//                            carbs = getJSONObject("recipe").getInt("CHOCDF"),
-//                            listOfIngredients = getJSONArray("ingredients"),
+                            protein = getJSONObject("recipe").getJSONObject("totalNutrients").getJSONObject("PROCNT").getDouble("quantity"),
+                            fat = getJSONObject("recipe").getJSONObject("totalNutrients").getJSONObject("FAT").getDouble("quantity"),
+                            carbs = getJSONObject("recipe").getJSONObject("totalNutrients").getJSONObject("CHOCDF").getDouble("quantity"),
+                            listOfIngredients = pars(getJSONObject("recipe").getJSONArray("ingredientLines")),
                             urlRecipe = getJSONObject("recipe").getString("url")
                     )
                 }
@@ -30,5 +33,13 @@ class RecipesDataModelMapper : (String) -> List<RecipeDataModel> {
             Log.d("ActivitySearchResult", itemList.toString())
         }
         return emptyList()
+    }
+
+    private fun pars (array : JSONArray) : MutableList<String> {
+        val arrayP : MutableList<String> = mutableListOf()
+        for (i in 0 until array.length()) {
+            arrayP.add(array.get(i).toString())
+        }
+        return arrayP
     }
 }

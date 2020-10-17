@@ -1,31 +1,24 @@
-package com.yandex.smur.marina.myfinalproject.search_result
+package com.yandex.smur.marina.myfinalproject.recipe_activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.yandex.smur.marina.myfinalproject.R
-import com.yandex.smur.marina.myfinalproject.SelectedFragment
-import com.yandex.smur.marina.myfinalproject.api.Ingredient
 import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.yandex.smur.marina.myfinalproject.activity_web_page.ActivityWebPageWithRecipe
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.activity_with_recipe.*
-import kotlinx.android.synthetic.main.item_for_list_for_search_result.view.*
+import java.text.DecimalFormat
 
 public const val REQUEST_CODE_ACTIVITYWITHRECIPE = "14568"
 
 class ActivityWithRecipe : AppCompatActivity() {
-
-    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +36,29 @@ class ActivityWithRecipe : AppCompatActivity() {
 
         textViewNumberOfServingOnActivityWithRecipe.text = recipe.numberOfServings.toString()
 
-        textViewEnergyOnActivityWithRecipe.text = recipe.energy.toString()
+        val energyServing = recipe.energy / recipe.numberOfServings
+        val energyServingFormat = DecimalFormat("#0.00").format(energyServing)
 
-//        textViewProteinOnActivityWithRecipe.text = recipe.protein.toString()
+        val proteinServing = recipe.protein / recipe.numberOfServings
+        val proteinServingFormat = DecimalFormat("#0.00").format(proteinServing)
 
-//        textViewFatOnActivityWithRecipe.text = recipe.fat.toString()
+        val fatServing = recipe.fat / recipe.numberOfServings
+        val fatServingFormat = DecimalFormat("#0.00").format(fatServing)
 
-//        textViewCarbsOnActivityWithRecipe.text = recipe.carbs.toString()
+        val carbsServing = recipe.carbs / recipe.numberOfServings
+        val carbsServingFormat = DecimalFormat("#0.00").format(carbsServing)
+
+        textViewEnergyOnActivityWithRecipe.text = energyServingFormat
+
+        textViewProteinOnActivityWithRecipe.text = proteinServingFormat
+
+        textViewFatOnActivityWithRecipe.text = fatServingFormat
+
+        textViewCarbsOnActivityWithRecipe.text = carbsServingFormat
 
         // ingredients
-//        val list = recipe.listOfIngredients
-//        initIngredients(list)
+        val list = recipe.listOfIngredients
+        initIngredients(list)
 
         seeTheFullRecipe(recipe.urlRecipe)
 
@@ -102,7 +107,7 @@ class ActivityWithRecipe : AppCompatActivity() {
         }
     }
 
-    private fun initIngredients (listOfIngredients: List<Ingredient>) {
+    private fun initIngredients(listOfIngredients: MutableList<String>) {
         listWithIngredients.apply {
             adapter = IngredientsAdapter(listOfIngredients)
         }

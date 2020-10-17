@@ -1,4 +1,4 @@
-package com.yandex.smur.marina.myfinalproject.search_result
+package com.yandex.smur.marina.myfinalproject.activity_web_page
 
 import android.graphics.Bitmap
 import android.os.Bundle

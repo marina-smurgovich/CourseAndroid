@@ -41,6 +41,8 @@
     <string name="enter_calories">Enter calories</string>
     <string name="cooking_time_item">Cooking time</string>
 
+    <string name="button_remove_all_in_shopingList">Remove All</string>
+
 
 
 </resources>

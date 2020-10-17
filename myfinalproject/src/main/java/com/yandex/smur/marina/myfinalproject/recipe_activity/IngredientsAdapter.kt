@@ -1,14 +1,13 @@
-package com.yandex.smur.marina.myfinalproject.search_result
+package com.yandex.smur.marina.myfinalproject.recipe_activity
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yandex.smur.marina.myfinalproject.R
-import com.yandex.smur.marina.myfinalproject.api.Ingredient
 import kotlinx.android.synthetic.main.item_for_recyclerview_activity_with_recipe.view.*
 
-class IngredientsAdapter (val listOfIngredients : List<Ingredient>) :
+class IngredientsAdapter (val listOfIngredients : MutableList<String>) :
         RecyclerView.Adapter<IngredientsAdapter.IngredientItemViewHolder> (){
 
 
@@ -22,15 +21,15 @@ class IngredientsAdapter (val listOfIngredients : List<Ingredient>) :
     }
 
     override fun getItemCount(): Int {
-        return listOfIngredients?.size ?: 0
+        return listOfIngredients.size ?: 0
     }
 
     class IngredientItemViewHolder (itemView : View) : RecyclerView.ViewHolder (itemView) {
 
-        public fun bind (ingredient: Ingredient) {
+        public fun bind (ingredient: String) {
             with(ingredient) {
                 itemView.apply {
-                    textViewOfIngredient.text = ingredient.ingredient
+                    textViewOfIngredient.text = ingredient.toString()
                 }
             }
         }

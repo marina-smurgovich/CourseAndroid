@@ -48,8 +48,7 @@ class DialogDietLabels : DialogFragment() {
         return builder.create()
     }
     private fun initArray() : Array<String> {
-        val array = arrayOf("Balanced", "High-Fiber", "High-Protein", "Low-Carb",
-        "Low-Fat", "Low-Sodium")
+        val array = arrayOf("balanced", "high-protein", "low-carb")
         return array
     }
 

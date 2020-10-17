@@ -53,11 +53,8 @@ class DialogHealthLabels : DialogFragment() {
     }
 
     private fun initArray() : Array<String> {
-        val array = arrayOf("Alcohol-free", "Celery-free", "Crustacean-free", "Dairy-free",
-        "Egg-free", "Fish-free", "Gluten-free", "Keto", "Kidney friendly", "Kosher", "Low potassium",
-        "Lupine-free", "Mustard-free", "No oil added", "No-sugar", "Paleo", "Peanut-free", "Pescatarian",
-        "Pork-free", "Red meat-free", "Sesame-free", "Shellfish-free", "Soy-free", "Sugar-conscious",
-        "Tree-Nut-free", "Vegan", "Vegetarian", "Wheat-free")
+        val array = arrayOf("alcohol-free", "peanut-free", "sugar-conscious",
+                "vegan", "vegetarian")
         return array
     }
 }

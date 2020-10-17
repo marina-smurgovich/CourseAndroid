@@ -8,22 +8,22 @@
 
     <fragment
         android:id="@+id/searchForrecipesFragment"
-        android:name="com.yandex.smur.marina.myfinalproject.SearchForrecipesFragment"
-        android:label="Fragment search for recipes"
+        android:name="com.yandex.smur.marina.myfinalproject.search_result.SearchForrecipesFragment"
+        android:label="Search for recipes"
         tools:layout="@layout/fragment_search_forrecipes" />
     <fragment
         android:id="@+id/selectedFragment"
-        android:name="com.yandex.smur.marina.myfinalproject.SelectedFragment"
-        android:label="Fragment selected"
+        android:name="com.yandex.smur.marina.myfinalproject.selected.SelectedFragment"
+        android:label="Selected"
         tools:layout="@layout/fragment_selected" />
     <fragment
         android:id="@+id/shoppingListFragment"
-        android:name="com.yandex.smur.marina.myfinalproject.ShoppingListFragment"
-        android:label="Fragment shopping list"
+        android:name="com.yandex.smur.marina.myfinalproject.shoppinglist.ShoppingListFragment"
+        android:label="Shopping list"
         tools:layout="@layout/fragment_shopping_list" />
     <fragment
         android:id="@+id/timerFragment"
         android:name="com.yandex.smur.marina.myfinalproject.TimerFragment"
-        android:label="Fragment timer"
+        android:label="Timer"
         tools:layout="@layout/fragment_timer" />
 </navigation>

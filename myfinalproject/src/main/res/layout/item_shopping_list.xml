@@ -7,17 +7,20 @@
     android:layout_marginVertical="5dp"
     android:layout_marginHorizontal="10dp">
 
-    <CheckBox
-        android:id="@+id/checkboxOfItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/MyCheckBox"
-        android:layout_gravity="center"
-        android:padding="1dp"/>
     <TextView
-        android:id="@+id/textViewOfIngredient"
+        android:id="@+id/itemShoppingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="1dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
+
+    <ImageButton
+        android:id="@+id/buttonDeleteItemInShoppingList"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/button_delete_shopping_list"
+        android:layout_margin="5dp"
         android:layout_gravity="center"/>
+
 </LinearLayout>

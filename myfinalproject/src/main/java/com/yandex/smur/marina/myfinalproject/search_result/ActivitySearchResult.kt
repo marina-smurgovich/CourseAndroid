@@ -14,9 +14,9 @@ import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
 import com.yandex.smur.marina.myfinalproject.api.RecipesDataModelMapper
 import com.yandex.smur.marina.myfinalproject.api.RecipesRepositoryImpl
+import com.yandex.smur.marina.myfinalproject.recipe_activity.ActivityWithRecipe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.activity_search_result.*
 import okhttp3.OkHttpClient

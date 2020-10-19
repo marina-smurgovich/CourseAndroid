@@ -24,32 +24,32 @@ import okhttp3.OkHttpClient
 class ActivitySearchResult : AppCompatActivity() {
 
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private var disposable : Disposable? = null
-    var searchObject : SearchObject? = null
+    private var disposable: Disposable? = null
+    var searchObject: SearchObject? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
 
-        val arguments : Bundle = intent.extras!!
+        val arguments: Bundle = intent.extras!!
         searchObject = arguments.get("mySearchObject") as SearchObject
 
         Log.d("ActivitySearchResult", searchObject!!.searchingByKeyword)
 
-        settingActivity ()
+        settingActivity()
 
         //настраиваю ресайклвью
         listWithResultOfSearch.apply {
             adapter = ListSearchResultAdapter(
-                    object : ListSearchResultAdapter.OnclickListenerAdapter{
-                override fun onItemClick(recipe: RecipeDataModel
-                )
-                {
-                    val intent = Intent(this@ActivitySearchResult, ActivityWithRecipe::class.java)
-                    intent.putExtra("recipe", recipe)
-                    startActivity(intent)
-                }
-            })
+                    object : ListSearchResultAdapter.OnclickListenerAdapter {
+                        override fun onItemClick(
+                                recipe: RecipeDataModel,
+                        ) {
+                            val intent = Intent(this@ActivitySearchResult, ActivityWithRecipe::class.java)
+                            intent.putExtra("recipe", recipe)
+                            startActivity(intent)
+                        }
+                    })
             viewManager = LinearLayoutManager(this@ActivitySearchResult)
         }
         fetchNewsList(searchObject!!)
@@ -61,7 +61,7 @@ class ActivitySearchResult : AppCompatActivity() {
     }
 
     private fun fetchNewsList(
-            searchObject: SearchObject
+            searchObject: SearchObject,
     ) {
         disposable = RecipesRepositoryImpl(
                 okHttpClient = OkHttpClient(),
@@ -69,11 +69,11 @@ class ActivitySearchResult : AppCompatActivity() {
         ).getRecipes(searchObject) // позже буду сюда закидывать полностью объект для поиска
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        {list ->
+                        { list ->
                             Log.d("ActivitySearchResult", list.toString())
                             (listWithResultOfSearch.adapter as? ListSearchResultAdapter)?.updateItemList(list)
                         },
-                        {throwable -> Log.d("ActivitySearchResult", throwable.toString())}
+                        { throwable -> Log.d("ActivitySearchResult", throwable.toString()) }
                 )
     }
 
@@ -82,8 +82,8 @@ class ActivitySearchResult : AppCompatActivity() {
         disposable?.dispose()
     }
 
-    private fun settingActivity () {
-        val host : NavHostFragment = supportFragmentManager
+    private fun settingActivity() {
+        val host: NavHostFragment = supportFragmentManager
                 .findFragmentById(R.id.navFragment) as NavHostFragment? ?: return
         val navController = host.navController
 

@@ -17,7 +17,7 @@ class ListSearchResultAdapter(
     private var listWithResultSearch = mutableListOf<RecipeDataModel>()
 
     public interface OnclickListenerAdapter {
-        fun onItemClick(recipe: RecipeDataModel)
+        fun onItemClick(recipe:RecipeDataModel)
     }
 
 

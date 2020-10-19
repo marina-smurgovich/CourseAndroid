@@ -7,15 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
-import com.yandex.smur.marina.myfinalproject.search_result.ListSearchResultAdapter
-import com.yandex.smur.marina.myfinalproject.shoppinglist.ShoppingListAdapter
-import kotlinx.android.synthetic.main.item_for_list_for_search_result.view.*
-import kotlinx.android.synthetic.main.item_for_list_for_search_result.view.imageViewFromItemForListForSearchResult
 import kotlinx.android.synthetic.main.item_selected.view.*
-import kotlinx.android.synthetic.main.item_shopping_list.view.*
 
 class SelectedAdapter (val listOfSelectedRecipes : MutableList<RecipeDataModel>?,
-                       private val listener : ListSearchResultAdapter.OnclickListenerAdapter?)
+                       private val listener : OnclickListenerAdapter?)
     : RecyclerView.Adapter<SelectedAdapter.SelectedListItemViewHolder> (){
 
     public interface OnclickListenerAdapter {
@@ -39,8 +34,16 @@ class SelectedAdapter (val listOfSelectedRecipes : MutableList<RecipeDataModel>?
         return listOfSelectedRecipes?.size ?:0
     }
 
+    fun updateItemList(itemListIn : List<RecipeDataModel>) {
+        listOfSelectedRecipes?.apply {
+            clear()
+            addAll(itemListIn)
+        }
+        notifyDataSetChanged()
+    }
+
     class SelectedListItemViewHolder ( itemView : View) : RecyclerView.ViewHolder(itemView) {
-        public fun bind (recipe : RecipeDataModel, listener: ListSearchResultAdapter.OnclickListenerAdapter) {
+        public fun bind (recipe: RecipeDataModel, listener: OnclickListenerAdapter?) {
             with(recipe) {
                 itemView.apply {
                     Glide.with(itemView.context)
@@ -49,9 +52,9 @@ class SelectedAdapter (val listOfSelectedRecipes : MutableList<RecipeDataModel>?
 
                     itemSelected.text = title
                     itemView.setOnClickListener{
-                        listener.onItemClick(recipe)
+                        listener!!.onItemClick(recipe)
                 }
             }
         }
     }
-}
+}}

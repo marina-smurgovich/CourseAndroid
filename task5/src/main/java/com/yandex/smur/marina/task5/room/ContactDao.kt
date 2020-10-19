@@ -1,7 +1,8 @@
-package com.yandex.smur.marina.task5.room
-
+//package com.yandex.smur.marina.task5.room
+//
 //import androidx.lifecycle.LiveData
 //import androidx.room.*
+//import com.yandex.smur.marina.task5.Contact
 //
 //@Dao
 //interface ContactDao {

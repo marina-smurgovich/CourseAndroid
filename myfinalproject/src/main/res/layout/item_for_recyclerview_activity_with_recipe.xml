@@ -7,13 +7,6 @@
     android:layout_marginVertical="5dp"
     android:layout_marginHorizontal="10dp">
 
-    <CheckBox
-        android:id="@+id/checkboxOfItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/MyCheckBox"
-        android:layout_gravity="center"
-        android:padding="1dp"/>
     <TextView
         android:id="@+id/textViewOfIngredient"
         android:layout_width="match_parent"

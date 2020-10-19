@@ -3,6 +3,7 @@ package com.yandex.smur.marina.myfinalproject.api
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.yandex.smur.marina.myfinalproject.recipe_activity.Ingredient
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -35,10 +36,11 @@ class RecipesDataModelMapper : (String) -> List<RecipeDataModel> {
         return emptyList()
     }
 
-    private fun pars (array : JSONArray) : MutableList<String> {
-        val arrayP : MutableList<String> = mutableListOf()
+    private fun pars (array : JSONArray) : MutableList<Ingredient> {
+        val arrayP : MutableList<Ingredient> = mutableListOf()
         for (i in 0 until array.length()) {
-            arrayP.add(array.get(i).toString())
+            val ingredient = Ingredient(Math.random(), array.get(i).toString())
+            arrayP.add(ingredient)
         }
         return arrayP
     }

@@ -3,9 +3,10 @@ package com.yandex.smur.marina.myfinalproject.api
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.yandex.smur.marina.myfinalproject.recipe_activity.Ingredient
 import java.io.Serializable
 
-@Entity
+
 data class RecipeDataModel(
         @PrimaryKey
         val id: Double = Math.random(),
@@ -32,7 +33,7 @@ data class RecipeDataModel(
         val carbs: Double,
 
         @ColumnInfo
-        val listOfIngredients: MutableList<String>,
+        val listOfIngredients: MutableList<Ingredient>,
 
         @ColumnInfo
         val urlRecipe: String

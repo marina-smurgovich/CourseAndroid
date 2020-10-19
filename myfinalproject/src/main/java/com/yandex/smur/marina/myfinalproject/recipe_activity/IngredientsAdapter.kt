@@ -7,9 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yandex.smur.marina.myfinalproject.R
 import kotlinx.android.synthetic.main.item_for_recyclerview_activity_with_recipe.view.*
 
-class IngredientsAdapter (val listOfIngredients : MutableList<String>) :
+class IngredientsAdapter (val listOfIngredients : MutableList<Ingredient>,
+                          private val listener: IngredientsAdapter.OnclickListenerAdapter?) :
         RecyclerView.Adapter<IngredientsAdapter.IngredientItemViewHolder> (){
 
+    public interface OnclickListenerAdapter {
+        fun onItemClick(ingredient: Ingredient)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             IngredientItemViewHolder (
@@ -17,7 +21,7 @@ class IngredientsAdapter (val listOfIngredients : MutableList<String>) :
             )
 
     override fun onBindViewHolder(holder: IngredientItemViewHolder, position: Int) {
-        holder.bind(listOfIngredients[position])
+        listener?.let { holder.bind(listOfIngredients[position], it) }
     }
 
     override fun getItemCount(): Int {
@@ -26,10 +30,14 @@ class IngredientsAdapter (val listOfIngredients : MutableList<String>) :
 
     class IngredientItemViewHolder (itemView : View) : RecyclerView.ViewHolder (itemView) {
 
-        public fun bind (ingredient: String) {
+        public fun bind (ingredient: Ingredient, listener: IngredientsAdapter.OnclickListenerAdapter) {
             with(ingredient) {
                 itemView.apply {
-                    textViewOfIngredient.text = ingredient.toString()
+                    textViewOfIngredient.text = ingredient.ingredient
+
+                    itemView.setOnClickListener {
+                        listener.onItemClick(ingredient)
+                    }
                 }
             }
         }

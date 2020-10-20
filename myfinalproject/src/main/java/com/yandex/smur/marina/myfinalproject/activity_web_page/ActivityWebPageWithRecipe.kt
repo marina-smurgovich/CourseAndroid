@@ -11,12 +11,16 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.yandex.smur.marina.myfinalproject.R
 import kotlinx.android.synthetic.main.activity_web_page_with_recipe.*
+import kotlinx.android.synthetic.main.activity_with_recipe.*
 
 class ActivityWebPageWithRecipe : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_page_with_recipe)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "    Web page"
 
         val args : Bundle? = intent.extras
         val url : String = args!!.get("seeTheFullRecipe").toString()

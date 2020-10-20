@@ -11,7 +11,7 @@
         android:background="?attr/colorAccent"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <FrameLayout
         android:layout_width="match_parent"

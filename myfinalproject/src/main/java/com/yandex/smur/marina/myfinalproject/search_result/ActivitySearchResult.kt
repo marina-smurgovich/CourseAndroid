@@ -19,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.activity_search_result.*
+import kotlinx.android.synthetic.main.activity_with_recipe.*
 import okhttp3.OkHttpClient
 
 class ActivitySearchResult : AppCompatActivity() {
@@ -83,16 +84,7 @@ class ActivitySearchResult : AppCompatActivity() {
     }
 
     private fun settingActivity() {
-        val host: NavHostFragment = supportFragmentManager
-                .findFragmentById(R.id.navFragment) as NavHostFragment? ?: return
-        val navController = host.navController
-
-        //включила боковое меню
-        val sideBar = findViewById<NavigationView>(R.id.nav_view)
-        sideBar?.setupWithNavController(navController)
-
-        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = drawer_layout)
-        val tooBar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        tooBar.setupWithNavController(navController, appBarConfiguration)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "    Search result"
     }
 }

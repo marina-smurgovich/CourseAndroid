@@ -68,17 +68,8 @@ class ActivityWithRecipe : AppCompatActivity() {
     }
 
     private fun settingActivity() {
-        val host: NavHostFragment = supportFragmentManager
-                .findFragmentById(R.id.navFragment) as NavHostFragment? ?: return
-        val navController = host.navController
-
-        //включила боковое меню
-        val sideBar = findViewById<NavigationView>(R.id.nav_view)
-        sideBar?.setupWithNavController(navController)
-
-        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = drawer_layout)
-        val tooBar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar1)
-        tooBar.setupWithNavController(navController, appBarConfiguration)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "    Recipe"
     }
 
     private fun seeTheFullRecipe(url: String) {

@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
 import com.yandex.smur.marina.myfinalproject.recipe_activity.ActivityWithRecipe
@@ -18,6 +20,8 @@ import com.yandex.smur.marina.myfinalproject.recipe_activity.Ingredient
 import com.yandex.smur.marina.myfinalproject.sqlite_database.DBHelper
 import kotlinx.android.synthetic.main.fragment_selected.*
 import org.json.JSONArray
+import org.json.JSONObject
+import java.lang.reflect.Type
 
 class SelectedFragment : Fragment() {
 
@@ -45,14 +49,14 @@ class SelectedFragment : Fragment() {
         val listOfSelectedRecipes: MutableList<RecipeDataModel> = getSelectedRecipesFromDB()
 
         recyclerViewSelected.apply {
-            adapter = SelectedAdapter(listOfSelectedRecipes, object : SelectedAdapter.OnclickListenerAdapter{
+            adapter = SelectedAdapter(listOfSelectedRecipes, object : SelectedAdapter.OnclickListenerAdapter {
                 override fun onItemClick(recipe: RecipeDataModel) {
                     val intent = Intent(activity, ActivityWithRecipe::class.java)
-                    intent.putExtra("selectedRecipe", recipe)
+                    intent.putExtra("recipe", recipe)
                     startActivity(intent)
                 }
 
-            }, object : SelectedAdapter.OnClickListenerButton{
+            }, object : SelectedAdapter.OnClickListenerButton {
                 override fun onItemClick(recipe: RecipeDataModel) {
                     deleteRecipe(recipe)
                     updateSelectedListAfterRemoveRecipe(recipe)
@@ -74,7 +78,6 @@ class SelectedFragment : Fragment() {
                 .rawQuery("SELECT * FROM selected_recipes", null)
 
         if (cursor!=null) {
-            cursor.moveToFirst()
             while(cursor.moveToNext()) {
                 val id: Double = cursor.getDouble(0)
                 val urlImage: String = cursor.getString(1)
@@ -84,13 +87,13 @@ class SelectedFragment : Fragment() {
                 val protein: Double = cursor.getDouble(5)
                 val fat: Double = cursor.getDouble(6)
                 val carbs: Double = cursor.getDouble(7)
-//                val listOfIngredientsDB : String = cursor.getString(8)
+                val listOfIngredientsDB : String = cursor.getString(8)
                 val urlRecipe: String = cursor.getString(9)
 
-//                val listOfIngredients : MutableList<Ingredient> = getListofIngredients(listOfIngredientsDB)
+                val listOfIngredients : MutableList<Ingredient> = getListofIngredients(listOfIngredientsDB)
 
                 val recipe : RecipeDataModel = RecipeDataModel(id, urlImage, title, numberOfServings, energy,
-                protein, fat, carbs, null, urlRecipe)
+                        protein, fat, carbs, listOfIngredients, urlRecipe)
 
                 list.add(recipe)
             }
@@ -101,15 +104,28 @@ class SelectedFragment : Fragment() {
 
     private fun getListofIngredients(str: String): MutableList<Ingredient> {
        val list : MutableList<Ingredient> = mutableListOf()
+//        val jsonArray = JSONArray(str)
+//        for (index in 0 until jsonArray.length()) {
+//            val ingredient : Ingredient = Ingredient(Math.random(), jsonArray.get(index).toString())
+//            list.add(ingredient)
+//        }
+//        val gson = Gson()
+//        val type = object : TypeToken<MutableList<Ingredient>>() {}.type
+//        val ingredients : MutableList<Ingredient> = gson.fromJson(str, type)
         val jsonArray = JSONArray(str)
-        for (index in 0 until jsonArray.length()) {
-            val ingredient : Ingredient = Ingredient(Math.random(), jsonArray.get(index).toString())
+        for (item in 0 until jsonArray.length()) {
+            val ingredient = with(jsonArray.getJSONObject(item)) {
+                Ingredient(
+                        id = getDouble("id"),
+                        ingredient = getString("ingredient")
+                )
+            }
             list.add(ingredient)
         }
         return list
     }
 
-    private fun deleteRecipe (recipe: RecipeDataModel) {
+    private fun deleteRecipe(recipe: RecipeDataModel) {
         val id = recipe.id
         databaseSelectedRecipes.delete("selected_recipes", "id = " + id, null)
     }

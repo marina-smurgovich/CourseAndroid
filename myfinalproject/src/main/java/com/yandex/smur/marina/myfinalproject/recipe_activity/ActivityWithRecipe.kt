@@ -162,7 +162,6 @@ class ActivityWithRecipe : AppCompatActivity() {
     private fun listToJson (recipe: RecipeDataModel) : String {
         val list = recipe.listOfIngredients
         val inputArray = list.toTypedArray()
-
         val gson = Gson()
         val inputString = gson.toJson(inputArray)
         return inputString

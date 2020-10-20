@@ -64,7 +64,6 @@ class ShoppingListFragment : Fragment() {
         val cursor: Cursor = databaseSelectedIngredients.rawQuery("SELECT * FROM selected_ingredients", null)
 
         if (cursor != null) {
-            cursor.moveToFirst()
             while (cursor.moveToNext()) {
                 val id: Double = cursor.getDouble(0)
                 val ingredientstr: String = cursor.getString(1)

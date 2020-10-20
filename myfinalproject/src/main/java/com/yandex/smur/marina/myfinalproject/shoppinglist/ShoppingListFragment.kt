@@ -45,12 +45,8 @@ class ShoppingListFragment : Fragment() {
         recyclerViewShoppingList.apply {
             adapter = ShoppingListAdapter(shoppingList, object : ShoppingListAdapter.OnclickListenerAdapter {
                 override fun onItemClick(ingredient: Ingredient) {
-                    buttonDeleteItemInShoppingList.setOnClickListener {
-                        View.OnClickListener {
                             updateShoppingListAfterRemoveIngredient(ingredient)
                             deleteIngredient(ingredient)
-                        }
-                    }
                 }
             })
             viewManager = LinearLayoutManager(activity)
@@ -58,6 +54,7 @@ class ShoppingListFragment : Fragment() {
 
         buttonRemoveAllInShopingList.setOnClickListener {
             deleteAllListInShoppingList()
+            updateAfterRemoveAllIngredients()
         }
 
     }
@@ -92,6 +89,10 @@ class ShoppingListFragment : Fragment() {
     private fun updateShoppingListAfterRemoveIngredient(ingredient: Ingredient) {
         adapter = recyclerViewShoppingList.adapter as ShoppingListAdapter
         adapter.deleteIngredientR(ingredient)
-        adapter.notifyDataSetChanged()
+    }
+
+    private fun updateAfterRemoveAllIngredients(){
+        adapter = recyclerViewShoppingList.adapter as ShoppingListAdapter
+        adapter.deleteAll()
     }
 }

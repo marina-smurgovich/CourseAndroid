@@ -3,6 +3,7 @@ package com.yandex.smur.marina.myfinalproject.sqlite_database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.yandex.smur.marina.myfinalproject.shoppinglist.ShoppingListAdapter
 
 class DBHelperSelectedIngredients(context: Context) : SQLiteOpenHelper(context, "selected_ingredients", null, 1) {
 

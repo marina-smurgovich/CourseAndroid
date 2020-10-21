@@ -3,6 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorButton">#CBF6F2</color>
     <color name="colorBlack">#050505</color>
     <color name="colorForCheckBox">#FFFEFE</color>
 </resources>

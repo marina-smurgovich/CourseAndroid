@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/searchForrecipesFragment"
-        android:title="@string/fragment_search_for_recipes" />
+        android:title="@string/fragment_search_for_recipes"/>
     <item
         android:id="@+id/selectedFragment"
         android:title="@string/selected_Fragment"/>

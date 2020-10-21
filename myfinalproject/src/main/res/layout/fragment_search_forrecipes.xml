@@ -16,7 +16,8 @@
         android:textSize="20sp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="15dp"
-        />
+        android:background="@drawable/rectangle_rounded"
+        android:layout_marginHorizontal="20dp"/>
 
     <Button
         android:id="@+id/buttonHealthLabels"
@@ -26,7 +27,9 @@
         android:text="@string/health_labels"
         android:textAllCaps="false"
         android:textSize="20sp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rectangle_rounded"
+        android:layout_marginHorizontal="20dp"/>
 
     <Button
         android:id="@+id/buttonDietLabels"
@@ -36,7 +39,9 @@
         android:text="@string/diet_labels"
         android:textAllCaps="false"
         android:textSize="20sp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rectangle_rounded"
+        android:layout_marginHorizontal="20dp"/>
 
     <Button
         android:id="@+id/buttonCalories"
@@ -46,7 +51,9 @@
         android:text="@string/calories"
         android:textAllCaps="false"
         android:textSize="20sp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rectangle_rounded"
+        android:layout_marginHorizontal="20dp"/>
 
     <Button
         android:id="@+id/buttonCookingTime"
@@ -56,13 +63,19 @@
         android:text="@string/cooking_time"
         android:textAllCaps="false"
         android:textSize="20sp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rectangle_rounded"
+        android:layout_marginHorizontal="20dp"/>
 
     <Button
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/search_button"
-        android:layout_gravity="bottom|center"/>
+        android:layout_gravity="bottom|center"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/for_button"/>
 
 </LinearLayout>

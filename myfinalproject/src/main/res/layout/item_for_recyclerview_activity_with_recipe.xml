@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginVertical="5dp"
-    android:layout_marginHorizontal="10dp">
+    android:layout_marginVertical="2dp"
+    android:layout_marginHorizontal="5dp">
 
     <TextView
         android:id="@+id/textViewOfIngredient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="1dp"
+        android:textSize="15sp"
+        android:textColor="@color/colorBlack"
         android:layout_gravity="center"/>
 </LinearLayout>

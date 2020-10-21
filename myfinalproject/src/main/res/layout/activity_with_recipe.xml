@@ -14,7 +14,28 @@
             android:background="?attr/colorAccent"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/buttonBackFromActivityWithRecipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_back"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recipe"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,36 +47,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <ImageView
-                android:id="@+id/imageViewOnActivityWithRecipe"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:padding="10dp" />
-
-            <TextView
-                android:id="@+id/titleOnActivityWithRecipe"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="Title"
-                android:textColor="@color/colorBlack"
-                android:textSize="20sp"
-                android:textStyle="italic|bold"
-                android:ellipsize="end"
-                android:maxLines="2"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/imageViewOnActivityWithRecipe"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:padding="10dp"/>
+                <TextView
+                    android:id="@+id/titleOnActivityWithRecipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -63,14 +86,17 @@
                         android:padding="2dp"
                         android:text="@string/number_of_servings"
                         android:textColor="@color/colorBlack"
-                        android:textStyle="italic" />
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/textViewNumberOfServingOnActivityWithRecipe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="2dp" />
+                        android:padding="2dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorBlack"/>
 
                 </LinearLayout>
 
@@ -87,14 +113,17 @@
                         android:padding="2dp"
                         android:text="@string/energy"
                         android:textColor="@color/colorBlack"
-                        android:textStyle="italic" />
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/textViewEnergyOnActivityWithRecipe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="2dp" />
+                        android:padding="2dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorBlack"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -116,14 +145,16 @@
                         android:padding="2dp"
                         android:text="@string/protein"
                         android:textColor="@color/colorBlack"
-                        android:textStyle="italic" />
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/textViewProteinOnActivityWithRecipe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="2dp" />
+                        android:padding="2dp"
+                        android:textColor="@color/colorBlack"/>
 
                 </LinearLayout>
 
@@ -140,21 +171,25 @@
                         android:padding="2dp"
                         android:text="@string/fat"
                         android:textColor="@color/colorBlack"
-                        android:textStyle="italic" />
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/textViewFatOnActivityWithRecipe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="2dp" />
+                        android:padding="2dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorBlack"/>
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:textSize="15sp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -163,14 +198,17 @@
                         android:padding="2dp"
                         android:text="@string/carbs"
                         android:textColor="@color/colorBlack"
-                        android:textStyle="italic" />
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/textViewCarbsOnActivityWithRecipe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="2dp" />
+                        android:padding="2dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorBlack"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -182,45 +220,53 @@
                 android:paddingVertical="2dp"
                 android:text="@string/ingredients"
                 android:textColor="@color/colorBlack"
-                android:textStyle="italic"/>
-
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="2dp"
+                android:text="@string/list_ingredients"
+                android:textSize="12sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listWithIngredients"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:paddingHorizontal="25dp"
+                android:layout_height="250dp"
+                android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <Button
-                android:id="@+id/buttonSeeTheFullRecipe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_for_view_recipe"
-                android:textStyle="normal|italic"
-                android:textAllCaps="false"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <Button
+                    android:id="@+id/buttonSeeTheFullRecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_for_view_recipe"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:layout_weight="1"
+                    android:background="@drawable/for_button"
+                    android:layout_marginHorizontal="5dp"/>
                 <Button
                     android:layout_weight="1"
                     android:id="@+id/buttonAddToFavourites"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/button_add_favourites"
-                    android:textStyle="normal|italic"
-                    android:textAllCaps="false"/>
-                <Button
-                    android:layout_weight="1"
-                    android:id="@+id/buttonBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_back"
-                    android:textStyle="normal|italic"
-                    android:textAllCaps="false"/>
+                    android:textStyle="normal"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:background="@drawable/for_button"
+                    android:layout_marginHorizontal="5dp"/>
+
 
             </LinearLayout>
         </LinearLayout>

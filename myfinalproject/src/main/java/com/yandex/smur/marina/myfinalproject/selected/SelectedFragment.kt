@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -18,6 +19,7 @@ import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
 import com.yandex.smur.marina.myfinalproject.recipe_activity.ActivityWithRecipe
 import com.yandex.smur.marina.myfinalproject.recipe_activity.Ingredient
 import com.yandex.smur.marina.myfinalproject.sqlite_database.DBHelper
+import kotlinx.android.synthetic.main.activity_with_recipe.*
 import kotlinx.android.synthetic.main.fragment_selected.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -64,6 +66,8 @@ class SelectedFragment : Fragment() {
             })
             viewManager = LinearLayoutManager(activity)
         }
+//        recyclerViewSelected.layoutManager = GridLayoutManager(activity, 2)
+
 
         buttonRemoveAllInSelected.setOnClickListener{
             deleteAllSelectedList()
@@ -104,14 +108,6 @@ class SelectedFragment : Fragment() {
 
     private fun getListofIngredients(str: String): MutableList<Ingredient> {
        val list : MutableList<Ingredient> = mutableListOf()
-//        val jsonArray = JSONArray(str)
-//        for (index in 0 until jsonArray.length()) {
-//            val ingredient : Ingredient = Ingredient(Math.random(), jsonArray.get(index).toString())
-//            list.add(ingredient)
-//        }
-//        val gson = Gson()
-//        val type = object : TypeToken<MutableList<Ingredient>>() {}.type
-//        val ingredients : MutableList<Ingredient> = gson.fromJson(str, type)
         val jsonArray = JSONArray(str)
         for (item in 0 until jsonArray.length()) {
             val ingredient = with(jsonArray.getJSONObject(item)) {

@@ -2,6 +2,7 @@ package com.yandex.smur.marina.myfinalproject.recipe_activity
 
 import android.content.ContentValues
 import android.content.Intent
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
@@ -23,6 +25,7 @@ import com.yandex.smur.marina.myfinalproject.sqlite_database.DBHelperSelectedIng
 
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.activity_with_recipe.*
+import org.json.JSONArray
 import java.text.DecimalFormat
 
 public const val REQUEST_CODE_ACTIVITYWITHRECIPE = "14568"
@@ -34,9 +37,9 @@ class ActivityWithRecipe : AppCompatActivity() {
     private lateinit var contentValues: ContentValues
     private lateinit var dbHelper: DBHelper
     private lateinit var dbHelperSelectedIngredients: DBHelperSelectedIngredients
+    private lateinit var listSelectedRecipes: MutableList<RecipeDataModel>
 
     private lateinit var recipe: RecipeDataModel
-//    private lateinit var selectedRecipeDao: SelectedRecipeDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +62,9 @@ class ActivityWithRecipe : AppCompatActivity() {
         val list = recipe.listOfIngredients
         initIngredients(list)
 
-        seeTheFullRecipe(recipe.urlRecipe)
+        listSelectedRecipes = getSelectedRecipesFromDB()
+
+        seeTheFullRecipe(recipe.urlRecipe, recipe.title)
 
         addToFavourites(recipe)
 
@@ -72,29 +77,34 @@ class ActivityWithRecipe : AppCompatActivity() {
         supportActionBar?.title = "    Recipe"
     }
 
-    private fun seeTheFullRecipe(url: String) {
+    private fun seeTheFullRecipe(url: String, title: String) {
         buttonSeeTheFullRecipe.setOnClickListener {
             val intent = Intent(this@ActivityWithRecipe, ActivityWebPageWithRecipe::class.java)
             intent.putExtra("seeTheFullRecipe", url)
+            intent.putExtra("seeTheFullRecipeTitle", title)
             startActivity(intent)
         }
     }
 
     private fun addToFavourites(recipe: RecipeDataModel) {
         buttonAddToFavourites.setOnClickListener {
+            if (listSelectedRecipes!!.contains(recipe)) {
+                Toast.makeText(this, "this recipe has already been added to favorites", Toast.LENGTH_LONG).show()
+            }
+            else
             addRecipeToDataBase(recipe)
         }
     }
 
     private fun back() {
-        buttonBack.setOnClickListener {
+        buttonBackFromActivityWithRecipe.setOnClickListener {
             finish()
         }
     }
 
     private fun initIngredients(listOfIngredients: MutableList<Ingredient>) {
         listWithIngredients.apply {
-            adapter = IngredientsAdapter(listOfIngredients, object : IngredientsAdapter.OnclickListenerAdapter{
+            adapter = IngredientsAdapter(listOfIngredients, object : IngredientsAdapter.OnclickListenerAdapter {
                 override fun onItemClick(ingredient: Ingredient) {
                     addIngredientToShoppingList(ingredient)
                     Toast.makeText(this@ActivityWithRecipe, "Item was added to Shopping List", Toast.LENGTH_LONG).show()
@@ -150,7 +160,7 @@ class ActivityWithRecipe : AppCompatActivity() {
     }
 
 
-    private fun listToJson (recipe: RecipeDataModel) : String {
+    private fun listToJson(recipe: RecipeDataModel): String {
         val list = recipe.listOfIngredients
         val inputArray = list.toTypedArray()
         val gson = Gson()
@@ -158,10 +168,55 @@ class ActivityWithRecipe : AppCompatActivity() {
         return inputString
     }
 
-    fun addIngredientToShoppingList (ingredient : Ingredient) {
+    fun addIngredientToShoppingList(ingredient: Ingredient) {
         contentValues.put("id", ingredient.id)
         contentValues.put("ingredient", ingredient.ingredient)
 
         databaseSelectedIngredients.insert("selected_ingredients", null, contentValues)
+    }
+
+    private fun getSelectedRecipesFromDB(): MutableList<RecipeDataModel> {
+        val list: MutableList<RecipeDataModel> = mutableListOf()
+        val cursor: Cursor = dataBaseSelectedRecipes
+                .rawQuery("SELECT * FROM selected_recipes", null)
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val id: Double = cursor.getDouble(0)
+                val urlImage: String = cursor.getString(1)
+                val title: String = cursor.getString(2)
+                val numberOfServings: Double = cursor.getDouble(3)
+                val energy: Double = cursor.getDouble(4)
+                val protein: Double = cursor.getDouble(5)
+                val fat: Double = cursor.getDouble(6)
+                val carbs: Double = cursor.getDouble(7)
+                val listOfIngredientsDB: String = cursor.getString(8)
+                val urlRecipe: String = cursor.getString(9)
+
+                val listOfIngredients: MutableList<Ingredient> = getListofIngredients(listOfIngredientsDB)
+
+                val recipe: RecipeDataModel = RecipeDataModel(id, urlImage, title, numberOfServings, energy,
+                        protein, fat, carbs, listOfIngredients, urlRecipe)
+
+                list.add(recipe)
+            }
+        }
+        cursor.close()
+        return list
+    }
+
+    private fun getListofIngredients(str: String): MutableList<Ingredient> {
+        val list: MutableList<Ingredient> = mutableListOf()
+        val jsonArray = JSONArray(str)
+        for (item in 0 until jsonArray.length()) {
+            val ingredient = with(jsonArray.getJSONObject(item)) {
+                Ingredient(
+                        id = getDouble("id"),
+                        ingredient = getString("ingredient")
+                )
+            }
+            list.add(ingredient)
+        }
+        return list
     }
 }

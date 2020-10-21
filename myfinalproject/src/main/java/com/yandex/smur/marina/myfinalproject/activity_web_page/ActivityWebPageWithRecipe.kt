@@ -2,6 +2,7 @@ package com.yandex.smur.marina.myfinalproject.activity_web_page
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.webkit.WebChromeClient
@@ -20,10 +21,14 @@ class ActivityWebPageWithRecipe : AppCompatActivity() {
         setContentView(R.layout.activity_web_page_with_recipe)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "    Web page"
 
-        val args : Bundle? = intent.extras
-        val url : String = args!!.get("seeTheFullRecipe").toString()
+        val args: Bundle? = intent.extras
+        val url: String = args!!.get("seeTheFullRecipe").toString()
+        val title: String = args!!.get("seeTheFullRecipeTitle").toString()
+
+        titleWebPage.text = title
+
+        buttonBackFromWebPage.setOnClickListener { finish() }
 
         initWebView()
 
@@ -56,7 +61,7 @@ class ActivityWebPageWithRecipe : AppCompatActivity() {
                 }
 
                 override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                   view.loadUrl(request.url.toString())
+                    view.loadUrl(request.url.toString())
                     return true
                 }
             }

@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.make
 import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.dialogs.*
 import kotlinx.android.synthetic.main.fragment_search_forrecipes.*
@@ -51,12 +53,11 @@ class SearchForrecipesFragment : Fragment() {
                     val intent = Intent(activity, ActivitySearchResult::class.java)
                     val searchObject = SearchObject(searchByKeyword, arrayHealthLabels, dietLabels, calories, cookingTime)
                     intent.putExtra("mySearchObject", searchObject)
-                    setToZeroSearchObject ()
+                    setToZeroSearchObject()
                     startActivity(intent)
 
-                }
-                else
-                    Toast.makeText(activity, "Enter a what you have eaten", Toast.LENGTH_LONG).show()
+                } else
+                Toast.makeText(activity, "Enter a what you have eaten", Toast.LENGTH_LONG).show()
             }
         })
 
@@ -116,9 +117,9 @@ class SearchForrecipesFragment : Fragment() {
                 }
             REQUEST_CODE_DIALOG_COOKING_TIME ->
                 if (resultCode == Activity.RESULT_OK) {
-                cookingTime = data?.getStringExtra("DialogCalories") ?: " "
-                Log.d("ActivitySearchResult", cookingTime.toString())
-            }
+                    cookingTime = data?.getStringExtra("DialogCalories") ?: " "
+                    Log.d("ActivitySearchResult", cookingTime.toString())
+                }
 
         }
     }

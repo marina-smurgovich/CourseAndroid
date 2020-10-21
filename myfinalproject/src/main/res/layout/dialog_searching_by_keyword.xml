@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="edit_keyword"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:textSize="20sp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

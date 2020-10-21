@@ -3,10 +3,12 @@ package com.yandex.smur.marina.myfinalproject.search_result
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
@@ -51,8 +53,8 @@ class ActivitySearchResult : AppCompatActivity() {
                             startActivity(intent)
                         }
                     })
-            viewManager = LinearLayoutManager(this@ActivitySearchResult)
         }
+        listWithResultOfSearch.layoutManager = GridLayoutManager(this, 2)
         fetchNewsList(searchObject!!)
 
     }
@@ -84,7 +86,8 @@ class ActivitySearchResult : AppCompatActivity() {
     }
 
     private fun settingActivity() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = "    Search result"
+        setSupportActionBar(toolbar1)
+        buttonBackFromActivitySearchResult.setOnClickListener { finish() }
+
     }
 }

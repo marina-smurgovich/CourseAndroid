@@ -10,13 +10,14 @@
         android:layout_height="wrap_content"
         android:hint="@string/edit"
         android:layout_margin="10dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textSize="20sp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text = "@string/min"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:textSize="18sp"/>
+        android:textSize="20sp"/>
 
 </LinearLayout>

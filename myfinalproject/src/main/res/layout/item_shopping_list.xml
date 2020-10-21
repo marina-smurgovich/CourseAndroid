@@ -13,14 +13,16 @@
         android:layout_height="wrap_content"
         android:padding="1dp"
         android:layout_gravity="center"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textColor="@color/colorBlack"
+        android:textSize="15dp"/>
 
     <ImageButton
         android:id="@+id/buttonDeleteItemInShoppingList"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@drawable/button_delete_shopping_list"
+        android:background="@drawable/button_clear"
         android:layout_margin="5dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
 </LinearLayout>

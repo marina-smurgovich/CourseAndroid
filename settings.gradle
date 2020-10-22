@@ -16,4 +16,5 @@ include ':customview'
 include ':hw3'
 include ':app:hw2'
 include ':app'
+include ':task8_weather'
 rootProject.name = "My Project"

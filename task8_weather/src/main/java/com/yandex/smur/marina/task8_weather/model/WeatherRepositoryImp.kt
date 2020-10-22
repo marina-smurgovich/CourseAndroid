@@ -1,18 +1,11 @@
-package com.yandex.smur.marina.task8_weather
+package com.yandex.smur.marina.task8_weather.model
 
-import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.SingleEmitter
-import io.reactivex.SingleOnSubscribe
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.schedulers.Schedulers.io
 import okhttp3.*
-import java.io.IOException
 import java.lang.NullPointerException
 
 private const val API_KEY = "48eab4d36c53ea2c6449fcc76285a962"
-
-//https://api.openweathermap.org/data/2.5/onecall?lat=53.9000000&lon=27.5666700&exclude=daily&lang=ru&appid=$API_KEY
 
 class WeatherRepositoryImpl(
         private val okHttpClient:OkHttpClient,
@@ -20,11 +13,8 @@ class WeatherRepositoryImpl(
 ) : WeatherRepository {
 
 
-    override fun getWeatherRepository(
-//            lat: String, lon: String
-    ): Single<List<WeatherDataModel>> {
-//        val url = "https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=daily&lang=ru&appid=$API_KEY"
-        val url = "https://api.openweathermap.org/data/2.5/onecall?lat=53.9000000&lon=27.5666700&exclude=daily&lang=ru&appid=48eab4d36c53ea2c6449fcc76285a962"
+    override fun getWeatherList (units: String): Single<List<WeatherDataModel>> {
+        val url = "https://http://api.openweathermap.org/data/2.5/forecast?q=Minsk&cnt=24&units=$units&appid=$API_KEY"
 
         val request = Request.Builder()
                 .url(url)

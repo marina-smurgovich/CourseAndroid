@@ -1,38 +1,40 @@
 package com.yandex.smur.marina.task8_weather.model
 
-import android.util.Log
 import org.json.JSONObject
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WeatherDataModelMapper : (String) -> List<WeatherDataModel> {
 
     override fun invoke(jsonData: String): List<WeatherDataModel> {
         val jsonObject = JSONObject(jsonData)
-        val jsonArticleArray = jsonObject.getJSONArray("list")
+        val jsonArticleArray = jsonObject.getJSONArray("hourly")
         if (jsonArticleArray.length() != 0) {
             val itemList = mutableListOf<WeatherDataModel>()
             for (index in 0 until jsonArticleArray.length()) {
                 val weatherDataModel = with(jsonArticleArray.getJSONObject(index)) {
                     WeatherDataModel(
-                            temperature = getJSONObject("main").getDouble("temp"),
-                            time = timeFormatter(getString("dt_txt")),
-                            description = getJSONArray("weather").getJSONObject(0).getString("description"),
+                            temperature = temperatureFormatter(getDouble("temp")),
+                            time = timeFormatter(getLong("dt")),
+                            description = getJSONArray("weather").getJSONObject(0).getString("main"),
                             urlImage = getImage(getJSONArray("weather").getJSONObject(0).getString("icon"))
                     )
                 }
                 itemList.add(weatherDataModel)
             }
             return itemList
-            Log.d("mLog", itemList.toString())
         }
         return emptyList()
     }
 
-    private fun timeFormatter(date: String): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        val dateTime = LocalDateTime.parse(date, formatter)
-        return "${dateTime.hour}:${dateTime.minute}"
+    private fun timeFormatter(date: Long): String {
+        val dateStr = SimpleDateFormat("HH:mm").format(Date(date as Long * 1000))
+        return dateStr
+    }
+
+    private fun temperatureFormatter(temperature: Double): String {
+        return DecimalFormat("#0").format(temperature)
     }
 
     private fun getImage(icon: String): String {

@@ -1,37 +1,51 @@
 package com.yandex.smur.marina.task8_weather
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.yandex.smur.marina.task8_weather.model.WeatherDataModelMapper
-import com.yandex.smur.marina.task8_weather.model.WeatherRepositoryImpl
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import okhttp3.OkHttpClient
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.yandex.smur.marina.task8_weather.setting.SettingFragment
+import com.yandex.smur.marina.task8_weather.view.WeatherAtThisMomentFragment
+import com.yandex.smur.marina.task8_weather.view.WeatherListFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-
-    private var disposable: Disposable? = null
+class MainActivity : AppCompatActivity(), View.OnClickListener {
+    private val weatherAtThisMomentFragment: WeatherAtThisMomentFragment by lazy { WeatherAtThisMomentFragment.getInstance() }
+    private val weatherListFragment: WeatherListFragment by lazy { WeatherListFragment.getInstanc() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        disposable = WeatherRepositoryImpl(
-                okHttpClient = OkHttpClient(),
-                weatherDataModelMapper = WeatherDataModelMapper()
-        ).getWeatherRepository(
-//                "53.9000000", "27.5666700"
-        )
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { list -> Log.d("MainActivity", list.toString()) },
-                        { throwable -> Log.d("MainActivity", throwable.toString()) }
-                )
+        setWeatherAtThisMomentFragment()
+        setWeatherListFragment()
+        buttonSetting.setOnClickListener(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable?.dispose()
+    private fun showSettingFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainerSetting, fragment, tag)
+                .remove(weatherListFragment)
+                .remove(weatherAtThisMomentFragment)
+                .addToBackStack(null)
+                .commit()
+    }
+
+    private fun setWeatherListFragment() {
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainerWeatherList, weatherListFragment, WeatherListFragment.TAG)
+                .commit()
+    }
+
+    private fun setWeatherAtThisMomentFragment() {
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainerWeatherAtTisMoment, weatherAtThisMomentFragment, WeatherAtThisMomentFragment.TAG)
+                .commit()
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+            buttonSetting -> showSettingFragment(SettingFragment.getInstance(), SettingFragment.TAG)
+        }
+
     }
 }

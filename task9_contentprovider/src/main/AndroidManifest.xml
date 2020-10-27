@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.yandex.smur.marina.task5">
+    package="com.yandex.smur.marina.task9_contentprovider">
 
     <permission android:name="com.yandex.smur.marina.task5.READ_DATABASE"
         android:protectionLevel="normal"/>
@@ -20,19 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddPersonActivity"
-            android:label="AddPersonActivity">
-        </activity>
-        <activity android:name=".EditContactActivity"
-            android:label="EditContactActivity">
-        </activity>
-
-        <provider
-            android:authorities="com.yandex.smur.marina.task5"
-            android:name="com.yandex.smur.marina.task5.DataContentProvider"
-            android:exported="true"
-            android:readPermission="com.yandex.smur.marina.task5.READ_DATABASE"/>
-
     </application>
 
 </manifest>

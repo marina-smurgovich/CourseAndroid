@@ -29,7 +29,7 @@
 
         <provider
             android:authorities="com.yandex.smur.marina.task5"
-            android:name="com.yandex.smur.marina.task5.DataContentProvider"
+            android:name=".DataContentProvider"
             android:exported="true"
             android:readPermission="com.yandex.smur.marina.task5.READ_DATABASE"/>
 

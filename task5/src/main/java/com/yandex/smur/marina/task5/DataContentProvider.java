@@ -19,7 +19,7 @@ public class DataContentProvider extends ContentProvider {
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(AUTHORITY, CONTACT_PATH, URI_CONTACT_CODE);
+        uriMatcher.addURI(AUTHORITY, "data/data", URI_CONTACT_CODE);
     }
 
     public static final Uri CONTACT_CONTENT_URI = Uri.parse("content://"
@@ -43,10 +43,10 @@ public class DataContentProvider extends ContentProvider {
                         @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Cursor cursor = null;
         if (uriMatcher.match(uri) == URI_CONTACT_CODE) {
-            cursor = sqLiteDatabase.query("ContactPlus", ALL_COLUMNS, selection, null,
+            cursor = sqLiteDatabase.query("ContactPlus", projection, selection, null,
                     null, null, sortOrder);
         }
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+//        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 

@@ -14,21 +14,21 @@ public class DataContentProvider extends ContentProvider {
 
     private static final String AUTHORITY = "com.yandex.smur.marina.task5";
     private static final int URI_CONTACT_CODE = 1;
-    private static final String CONTACT_PATH = "ContactPlus";
+//    private static final String CONTACT_PATH = "ContactPlus";
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         uriMatcher.addURI(AUTHORITY, "data/data", URI_CONTACT_CODE);
     }
-
-    public static final Uri CONTACT_CONTENT_URI = Uri.parse("content://"
-            + AUTHORITY + "/" + CONTACT_PATH);
+//
+//    public static final Uri CONTACT_CONTENT_URI = Uri.parse("content://"
+//            + AUTHORITY + "/" + CONTACT_PATH);
 
     private DBHelper dbHelper;
     private SQLiteDatabase sqLiteDatabase;
-    public static final String[] ALL_COLUMNS =
-            {"KEY_ID", "KEY_NAME", "KEY_INFO", "KEY_IMAGE"};
+//    public static final String[] ALL_COLUMNS =
+//            {"KEY_ID", "KEY_NAME", "KEY_INFO", "KEY_IMAGE"};
 
     @Override
     public boolean onCreate() {

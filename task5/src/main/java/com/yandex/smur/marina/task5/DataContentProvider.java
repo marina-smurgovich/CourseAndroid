@@ -14,16 +14,16 @@ public class DataContentProvider extends ContentProvider {
 
     private static final String AUTHORITY = "com.yandex.smur.marina.task5";
     private static final int URI_CONTACT_CODE = 1;
-//    private static final String CONTACT_PATH = "ContactPlus";
+    private static final String CONTACT_PATH = "ContactPlus";
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(AUTHORITY, "data/data", URI_CONTACT_CODE);
+        uriMatcher.addURI(AUTHORITY, CONTACT_PATH, URI_CONTACT_CODE);
     }
-//
-//    public static final Uri CONTACT_CONTENT_URI = Uri.parse("content://"
-//            + AUTHORITY + "/" + CONTACT_PATH);
+
+    public static final Uri CONTACT_CONTENT_URI = Uri.parse("content://"
+            + AUTHORITY + "/" + CONTACT_PATH);
 
     private DBHelper dbHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -33,7 +33,6 @@ public class DataContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         dbHelper = new DBHelper(getContext());
-        sqLiteDatabase  = dbHelper.getReadableDatabase();
         return true;
     }
 
@@ -41,12 +40,13 @@ public class DataContentProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
                         @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        sqLiteDatabase  = dbHelper.getReadableDatabase();
         Cursor cursor = null;
         if (uriMatcher.match(uri) == URI_CONTACT_CODE) {
             cursor = sqLiteDatabase.query("ContactPlus", projection, selection, null,
                     null, null, sortOrder);
         }
-//        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        cursor.setNotificationUri(getContext().getContentResolver(), CONTACT_CONTENT_URI);
         return cursor;
     }
 

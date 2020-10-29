@@ -1,15 +1,14 @@
 package com.yandex.smur.marina.task9_contentprovider
 
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,13 +41,12 @@ class MainActivity : AppCompatActivity() {
                         cursor.getString(contactInfo),
                         cursor.getInt(contactImage)
                 )
+                adapter.updateList(contact)
             }
 
             cursor.close()
-            contacts.add(contact)
         }
 
-        emptyList()
     }
 
     private fun setRecyclerView() {
@@ -96,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val URI_PATH = "content://com.yandex.smur.marina.task5/data/data"
+        private const val URI_PATH = "content://com.yandex.smur.marina.task5/ContactPlus"
     }
 
 }

@@ -1,3 +1,5 @@
+include ':task7_'
+include ':task7_broadcastreceiver_service'
 include ':task9_contentprovider'
 include ':task7'
 include ':task7broadcastreceiverserver'

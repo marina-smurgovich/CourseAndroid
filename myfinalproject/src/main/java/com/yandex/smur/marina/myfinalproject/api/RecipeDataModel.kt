@@ -1,7 +1,6 @@
 package com.yandex.smur.marina.myfinalproject.api
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.yandex.smur.marina.myfinalproject.recipe_activity.Ingredient
 import java.io.Serializable
@@ -36,8 +35,7 @@ data class RecipeDataModel(
         val listOfIngredients: MutableList<Ingredient>,
 
         @ColumnInfo
-        val urlRecipe: String
-)
-    : Serializable {
+        val urlRecipe: String,
+) : Serializable {
 
 }

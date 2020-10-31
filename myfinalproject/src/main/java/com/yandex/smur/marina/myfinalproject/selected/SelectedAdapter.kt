@@ -31,7 +31,6 @@ class SelectedAdapter(
                     }
             )
 
-
     override fun onBindViewHolder(holder: SelectedListItemViewHolder, position: Int) {
         if (listener != null) {
             holder.bind(listOfSelectedRecipes!![position], listener, listenerBtn)

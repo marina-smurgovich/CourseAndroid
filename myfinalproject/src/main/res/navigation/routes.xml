@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_shopping_list" />
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.yandex.smur.marina.myfinalproject.TimerFragment"
+        android:name="com.yandex.smur.marina.myfinalproject.timer.TimerFragment"
         android:label="Timer"
         tools:layout="@layout/fragment_timer" />
 </navigation>

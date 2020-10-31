@@ -3,8 +3,6 @@ package com.yandex.smur.marina.myfinalproject.dialogs
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
-import android.content.DialogInterface.OnClickListener
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
@@ -23,36 +21,28 @@ class DialogHealthLabels : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val array = initArray()
-        val selectedList : ArrayList<String> = arrayListOf()
-        val builder : AlertDialog.Builder = AlertDialog.Builder(activity)
+        val selectedList: ArrayList<String> = arrayListOf()
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
 
         builder.setTitle(R.string.title_health_labels)
-                .setMultiChoiceItems(array, null, object : DialogInterface.OnMultiChoiceClickListener {
-                    override fun onClick(p0: DialogInterface?, which: Int, isChecked: Boolean) {
-                        if (isChecked) {
-                            selectedList.add(array.get(which))
-                        } else if (selectedList.contains(which)) {
-                            selectedList.remove(which.toString())
-                        }
+                .setMultiChoiceItems(array, null) { p0, which, isChecked ->
+                    if (isChecked) {
+                        selectedList.add(array.get(which))
+                    } else if (selectedList.contains(which)) {
+                        selectedList.remove(which.toString())
                     }
-                })
-                .setPositiveButton(R.string.add_keyword, object : DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        val intent = Intent()
-                        intent.putStringArrayListExtra("DialogHealthLabels", selectedList)
-                        targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
-                    }
-                })
-                .setNegativeButton(R.string.cancel, object : DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-
-                    }
-                })
+                }
+                .setPositiveButton(R.string.add_keyword) { p0, p1 ->
+                    val intent = Intent()
+                    intent.putStringArrayListExtra("DialogHealthLabels", selectedList)
+                    targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
+                }
+                .setNegativeButton(R.string.cancel) { p0, p1 -> }
         return builder.create()
 
     }
 
-    private fun initArray() : Array<String> {
+    private fun initArray(): Array<String> {
         val array = arrayOf("alcohol-free", "peanut-free", "sugar-conscious",
                 "vegan", "vegetarian")
         return array

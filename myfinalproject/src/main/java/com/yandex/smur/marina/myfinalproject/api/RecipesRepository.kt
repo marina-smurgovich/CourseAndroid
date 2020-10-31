@@ -6,6 +6,6 @@ import io.reactivex.Single
 
 interface RecipesRepository {
     fun getRecipes(
-            searchObject: SearchObject
+            searchObject: SearchObject,
     ): Single<List<RecipeDataModel>>
 }

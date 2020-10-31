@@ -11,13 +11,13 @@ import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
 import kotlinx.android.synthetic.main.item_for_list_for_search_result.view.*
 
 
-class ListSearchResultAdapter(
-        private val listener: OnclickListenerAdapter?) : RecyclerView.Adapter<ListSearchResultAdapter.RecipeItemViewHolder>() {
+class ListSearchResultAdapter( private val listener: OnclickListenerAdapter?)
+    : RecyclerView.Adapter<ListSearchResultAdapter.RecipeItemViewHolder>() {
 
     private var listWithResultSearch = mutableListOf<RecipeDataModel>()
 
     public interface OnclickListenerAdapter {
-        fun onItemClick(recipe:RecipeDataModel)
+        fun onItemClick(recipe: RecipeDataModel)
     }
 
 

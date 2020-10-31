@@ -9,31 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.make
 import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.dialogs.*
 import kotlinx.android.synthetic.main.fragment_search_forrecipes.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 private const val REQUEST_CODE_DIALOG_SEARCH_BY_KEY_WORD = 10
 private const val REQUEST_CODE_DIALOG_HEALTH_LABELS = 11
 private const val REQUEST_CODE_DIALOG_DIET_LABELS = 12
 private const val REQUEST_CODE_DIALOG_CALORIES = 13
 private const val REQUEST_CODE_DIALOG_COOKING_TIME = 13
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchForrecipesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SearchForrecipesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private val param1 by lazy { arguments?.getString(ARG_PARAM1) }
-    private val param2 by lazy { arguments?.getString(ARG_PARAM2) }
 
     var searchByKeyword: String = " "
     var arrayHealthLabels: ArrayList<String>? = null
@@ -57,7 +44,7 @@ class SearchForrecipesFragment : Fragment() {
                     startActivity(intent)
 
                 } else
-                Toast.makeText(activity, "Enter a what you have eaten", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "Enter a what you have eaten", Toast.LENGTH_LONG).show()
             }
         })
 
@@ -124,7 +111,7 @@ class SearchForrecipesFragment : Fragment() {
         }
     }
 
-    private fun setToZeroSearchObject () {
+    private fun setToZeroSearchObject() {
         searchByKeyword = " "
         arrayHealthLabels = null
         dietLabels = null
@@ -132,23 +119,4 @@ class SearchForrecipesFragment : Fragment() {
         cookingTime = " "
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchForrecipesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                SearchForrecipesFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-    }
 }

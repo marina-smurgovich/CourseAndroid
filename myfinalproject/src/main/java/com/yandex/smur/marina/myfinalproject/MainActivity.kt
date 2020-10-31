@@ -1,10 +1,7 @@
 package com.yandex.smur.marina.myfinalproject
 
 import android.os.Bundle
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController

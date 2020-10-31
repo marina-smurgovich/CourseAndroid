@@ -23,6 +23,26 @@
         <activity android:name=".recipe_activity.ActivityWithRecipe"/>
         <activity android:name=".activity_web_page.ActivityWebPageWithRecipe"/>
 
+
+        <receiver
+            android:name=".timer.TimerExpiredReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".timer.TimerNotificationActionReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="stop" />
+                <action android:name="pause" />
+                <action android:name="resume" />
+                <action android:name="start" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".timer.SettingsActivity"/>
+
     </application>
 
 </manifest>

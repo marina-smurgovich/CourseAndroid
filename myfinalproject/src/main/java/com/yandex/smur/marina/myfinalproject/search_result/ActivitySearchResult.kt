@@ -3,15 +3,9 @@ package com.yandex.smur.marina.myfinalproject.search_result
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
 import com.yandex.smur.marina.myfinalproject.api.RecipesDataModelMapper
@@ -19,9 +13,7 @@ import com.yandex.smur.marina.myfinalproject.api.RecipesRepositoryImpl
 import com.yandex.smur.marina.myfinalproject.recipe_activity.ActivityWithRecipe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.activity_search_result.*
-import kotlinx.android.synthetic.main.activity_with_recipe.*
 import okhttp3.OkHttpClient
 
 class ActivitySearchResult : AppCompatActivity() {

@@ -23,27 +23,21 @@ class DialogSearchingByKeyword() : DialogFragment() {
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?) : Dialog {
-        val inflater : LayoutInflater = activity!!.layoutInflater
+        val inflater : LayoutInflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.dialog_searching_by_keyword, null)
         return AlertDialog.Builder(activity)
                 .setTitle(R.string.title_searching_by_keyword)
                 .setMessage(R.string.text_searching_by_keyword)
                 .setView(view)
 
-                .setPositiveButton(R.string.add_keyword, object : DialogInterface.OnClickListener {
-                    override fun onClick(dialog: DialogInterface?, whichButton: Int) {
-                        val input = view.editTextSearchingByKeyword.text.toString()
-                        val intent = Intent()
-                        intent.putExtra("editViewText", input)
-                      targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
-                    }
-                })
+                .setPositiveButton(R.string.add_keyword) { dialog, whichButton ->
+                    val input = view.editTextSearchingByKeyword.text.toString()
+                    val intent = Intent()
+                    intent.putExtra("editViewText", input)
+                    targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
+                }
 
-                .setNegativeButton(R.string.cancel, object : DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-
-                    }
-                })
+                .setNegativeButton(R.string.cancel) { p0, p1 -> }
                 .create();
     }
 

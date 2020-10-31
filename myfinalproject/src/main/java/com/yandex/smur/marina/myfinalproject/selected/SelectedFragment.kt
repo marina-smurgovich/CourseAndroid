@@ -9,21 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.yandex.smur.marina.myfinalproject.R
 import com.yandex.smur.marina.myfinalproject.api.RecipeDataModel
 import com.yandex.smur.marina.myfinalproject.recipe_activity.ActivityWithRecipe
 import com.yandex.smur.marina.myfinalproject.recipe_activity.Ingredient
 import com.yandex.smur.marina.myfinalproject.sqlite_database.DBHelper
-import kotlinx.android.synthetic.main.activity_with_recipe.*
 import kotlinx.android.synthetic.main.fragment_selected.*
 import org.json.JSONArray
-import org.json.JSONObject
-import java.lang.reflect.Type
 
 class SelectedFragment : Fragment() {
 
@@ -43,7 +37,7 @@ class SelectedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dbHelper = DBHelper(activity!!)
+        dbHelper = DBHelper(requireActivity())
         databaseSelectedRecipes = dbHelper.writableDatabase
         contentValues = ContentValues()
 
@@ -66,23 +60,20 @@ class SelectedFragment : Fragment() {
             })
             viewManager = LinearLayoutManager(activity)
         }
-//        recyclerViewSelected.layoutManager = GridLayoutManager(activity, 2)
 
-
-        buttonRemoveAllInSelected.setOnClickListener{
+        buttonRemoveAllInSelected.setOnClickListener {
             deleteAllSelectedList()
             updateAfterDeleteAllSelectedList()
         }
-
     }
 
-    private fun getSelectedRecipesFromDB(): MutableList<RecipeDataModel>{
+    private fun getSelectedRecipesFromDB(): MutableList<RecipeDataModel> {
         val list: MutableList<RecipeDataModel> = mutableListOf()
-        val cursor : Cursor = databaseSelectedRecipes
+        val cursor: Cursor = databaseSelectedRecipes
                 .rawQuery("SELECT * FROM selected_recipes", null)
 
-        if (cursor!=null) {
-            while(cursor.moveToNext()) {
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
                 val id: Double = cursor.getDouble(0)
                 val urlImage: String = cursor.getString(1)
                 val title: String = cursor.getString(2)
@@ -91,12 +82,12 @@ class SelectedFragment : Fragment() {
                 val protein: Double = cursor.getDouble(5)
                 val fat: Double = cursor.getDouble(6)
                 val carbs: Double = cursor.getDouble(7)
-                val listOfIngredientsDB : String = cursor.getString(8)
+                val listOfIngredientsDB: String = cursor.getString(8)
                 val urlRecipe: String = cursor.getString(9)
 
-                val listOfIngredients : MutableList<Ingredient> = getListofIngredients(listOfIngredientsDB)
+                val listOfIngredients: MutableList<Ingredient> = getListofIngredients(listOfIngredientsDB)
 
-                val recipe : RecipeDataModel = RecipeDataModel(id, urlImage, title, numberOfServings, energy,
+                val recipe: RecipeDataModel = RecipeDataModel(id, urlImage, title, numberOfServings, energy,
                         protein, fat, carbs, listOfIngredients, urlRecipe)
 
                 list.add(recipe)
@@ -107,7 +98,7 @@ class SelectedFragment : Fragment() {
     }
 
     private fun getListofIngredients(str: String): MutableList<Ingredient> {
-       val list : MutableList<Ingredient> = mutableListOf()
+        val list: MutableList<Ingredient> = mutableListOf()
         val jsonArray = JSONArray(str)
         for (item in 0 until jsonArray.length()) {
             val ingredient = with(jsonArray.getJSONObject(item)) {
@@ -126,17 +117,17 @@ class SelectedFragment : Fragment() {
         databaseSelectedRecipes.delete("selected_recipes", "id = " + id, null)
     }
 
-    private fun updateSelectedListAfterRemoveRecipe(recipe: RecipeDataModel){
-        adapter =  recyclerViewSelected.adapter as SelectedAdapter
+    private fun updateSelectedListAfterRemoveRecipe(recipe: RecipeDataModel) {
+        adapter = recyclerViewSelected.adapter as SelectedAdapter
         adapter.deleteRecipe(recipe)
     }
 
-    private fun deleteAllSelectedList(){
-       databaseSelectedRecipes.delete("selected_recipes", null, null)
+    private fun deleteAllSelectedList() {
+        databaseSelectedRecipes.delete("selected_recipes", null, null)
     }
 
-    private fun updateAfterDeleteAllSelectedList(){
-        adapter =  recyclerViewSelected.adapter as SelectedAdapter
+    private fun updateAfterDeleteAllSelectedList() {
+        adapter = recyclerViewSelected.adapter as SelectedAdapter
         adapter.deleteallRecipe()
     }
 }

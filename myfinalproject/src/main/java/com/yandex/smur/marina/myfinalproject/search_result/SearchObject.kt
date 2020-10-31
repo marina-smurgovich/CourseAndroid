@@ -7,6 +7,7 @@ class SearchObject(
         var healthLabels: ArrayList<String>?,
         val dietLabels: ArrayList<String>?,
         val calories: String,
-        val cookingTime: String ) : Serializable {
+        val cookingTime: String,
+) : Serializable {
 
 }

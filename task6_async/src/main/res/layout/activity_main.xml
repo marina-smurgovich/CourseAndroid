@@ -29,6 +29,13 @@
             android:hint="@string/Search"
             android:layout_weight="1"
             android:background="@android:color/background_light"/>
+        <ImageButton
+            android:id="@+id/buttonSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_settings_24"
+            android:layout_gravity="center"/>
+
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"

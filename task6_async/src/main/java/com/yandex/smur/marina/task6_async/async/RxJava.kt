@@ -3,34 +3,28 @@ package com.yandex.smur.marina.task6_async.async
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.os.Looper
-import android.os.Message
-import android.util.Log
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.yandex.smur.marina.task6_async.Contact
 import com.yandex.smur.marina.task6_async.ContactListAdapter
-import java.util.concurrent.Executors
-import java.util.concurrent.ThreadPoolExecutor
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
-class ThreadPoolExecutorHandler(
+class RxJava(
         private var contacts: MutableList<Contact>,
         private val dataBase: SQLiteDatabase,
-        private val adapter: ContactListAdapter
+        private val adapter: ContactListAdapter,
 ) : RepositoryInterface {
 
-    private val threadPoolExecutor: ThreadPoolExecutor = Executors.newFixedThreadPool(1) as ThreadPoolExecutor
+    private lateinit var disposable : Disposable
 
-    private val handler: android.os.Handler = android.os.Handler(Looper.getMainLooper(), object : android.os.Handler.Callback {
-        override fun handleMessage(message: Message): Boolean {
-            if (message.what == 0) run {
-                val contacts: MutableList<Contact> = message.obj as MutableList<Contact>
-                adapter.setContacts(contacts)
-            }
-            return false
-        }
-    })
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     override fun addContactsFromDataBase(): MutableList<Contact> {
-        threadPoolExecutor.execute {
+        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
             val contacts: MutableList<Contact> = ArrayList()
             val cursor: Cursor = dataBase.rawQuery("SELECT * FROM ContactPlus", null)
 
@@ -47,13 +41,16 @@ class ThreadPoolExecutorHandler(
                 }
             }
             cursor.close()
-            handler.sendMessage(handler.obtainMessage(0, contacts))
-        }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ()
+
         return contacts
     }
 
     override fun editCountFromDataBase(contact: Contact) {
-        threadPoolExecutor.execute {
+        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
             val contentValues: ContentValues = ContentValues()
             contentValues.put("KEY_ID", contact.id)
             contentValues.put("KEY_NAME", contact.name)
@@ -61,19 +58,25 @@ class ThreadPoolExecutorHandler(
             contentValues.put("KEY_IMAGE", contact.image)
 
             dataBase.update("ContactPlus", contentValues, "KEY_ID =? ", arrayOf(contact.id.toString()))
-        }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ()
     }
 
     override fun deleteContactFromDataBase(contact: Contact) {
-        threadPoolExecutor.execute {
+        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
             val id: Double = contact.id
 
             dataBase.delete("ContactPlus", "KEY_ID = " + id, null)
-        }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ()
     }
 
     override fun addContactToDataBase(contact: Contact) {
-        threadPoolExecutor.execute {
+        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
             val contentValues: ContentValues = ContentValues()
             contentValues.put("KEY_ID", contact.id)
             contentValues.put("KEY_NAME", contact.name)
@@ -81,12 +84,13 @@ class ThreadPoolExecutorHandler(
             contentValues.put("KEY_IMAGE", contact.image)
 
             dataBase.insert("ContactPlus", null, contentValues)
-            Log.d("mLog", " added Contact with id " + contact.id + " , name " + contact.name
-                    + " , info " + contact.info + " , image " + contact.image)
-        }
-    }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ()    }
 
     override fun closeThreads() {
-        threadPoolExecutor.shutdown()
+        disposable.dispose()
     }
+
 }

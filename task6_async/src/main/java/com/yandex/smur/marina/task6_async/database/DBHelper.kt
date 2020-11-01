@@ -1,4 +1,4 @@
-package com.yandex.smur.marina.task6_async
+package com.yandex.smur.marina.task6_async.database
 
 import android.content.ContentValues
 import android.content.Context

@@ -37,44 +37,4 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-//    private fun setRadioGroupListener() {
-//        radioGroupSettings.setOnCheckedChangeListener { radioGroup, checkedId ->
-//            if (checkedId == R.id.radioButtonThreadPoolExecutorHandler) {
-//                saveStorageAsyncType(THREADPOOLEXECUTER_HANDLER)
-//            }
-//            else if (checkedId == R.id.radioButtonCompletableFutureThreadPoolExecutor) {
-//                saveStorageAsyncType(COMPLETABLEFUTURE_THREADPOOLEXECUTOR)
-//            }
-//            else if (checkedId == R.id.radioButtonRxJava) {
-//                saveStorageAsyncType(RXJAVA)
-//            }
-//        }
-//    }
-//
-//    private fun saveStorageAsyncType(asyncType: String) {
-//        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
-//        val editor = sharedPreferences.edit()
-//        editor.putString(PREF_SAVE_KEY, asyncType)
-//        editor.apply()
-//    }
-//
-//    private fun loadPrefSettings() {
-//        val loadAsyncType = loadAsyncType()
-//        if (THREADPOOLEXECUTER_HANDLER.equals(loadAsyncType)) {
-//            radioButtonThreadPoolExecutorHandler.isChecked = true
-//        } else if (COMPLETABLEFUTURE_THREADPOOLEXECUTOR.equals(loadAsyncType)) {
-//            radioButtonCompletableFutureThreadPoolExecutor.isChecked = true
-//        } else if (RXJAVA.equals(loadAsyncType)) {
-//            radioButtonRxJava.isChecked = true
-//        }
-//    }
-//
-//    private fun loadAsyncType(): String? {
-//        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
-//        return sharedPreferences.getString(PREF_SAVE_KEY, THREADPOOLEXECUTER_HANDLER)
-//    }
-
-
-
 }

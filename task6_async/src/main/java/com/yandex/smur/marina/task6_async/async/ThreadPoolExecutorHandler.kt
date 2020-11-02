@@ -35,7 +35,6 @@ class ThreadPoolExecutorHandler(
             val cursor: Cursor = dataBase.rawQuery("SELECT * FROM ContactPlus", null)
 
             if (cursor != null) {
-                cursor.moveToFirst()
                 while (cursor.moveToNext()) {
                     val idCursor: Double = cursor.getDouble(0)
                     val nameCursor: String = cursor.getString(1)

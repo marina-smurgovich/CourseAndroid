@@ -42,17 +42,15 @@ public class ContactListAdapter(private var contacts: MutableList<Contact> = mut
     public fun deleteItem(contact: Contact) {
         val idContact: Double = contact.id
         contacts.find { contact.id.equals(idContact) }
-                contacts.remove(contact)
-            }
+        contacts.remove(contact)
+    }
 
 
     public fun replaceItem(contact: Contact) {
         val idContact: Double = contact.id
         var oldContact = contacts.find { contact.id.equals(idContact) }
         oldContact = contact
-            }
-
-
+    }
 
 
     public fun filterList(filterList: MutableList<Contact>) {
@@ -64,7 +62,7 @@ public class ContactListAdapter(private var contacts: MutableList<Contact> = mut
             RecyclerView.ViewHolder(inflater.inflate(R.layout.item, parent, false)) {
         private var itemName: TextView = itemView.findViewById(R.id.item_name)
         private var itemInfo: TextView = itemView.findViewById(R.id.item_info)
-        private  var imageView: ImageView = itemView.findViewById(R.id.image_item)
+        private var imageView: ImageView = itemView.findViewById(R.id.image_item)
 
         public fun bind(contact: Contact, listener: OnclickListener) {
             itemName.text = contact.name

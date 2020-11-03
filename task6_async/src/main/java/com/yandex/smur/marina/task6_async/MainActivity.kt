@@ -3,20 +3,15 @@ package com.yandex.smur.marina.task6_async
 
 import android.content.ContentValues
 import android.content.Intent
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yandex.smur.marina.task6_async.async.CompletableFutureThreadPoolExecutor
-import com.yandex.smur.marina.task6_async.async.RepositoryInterface
-import com.yandex.smur.marina.task6_async.async.RxJava
-import com.yandex.smur.marina.task6_async.async.ThreadPoolExecutorHandler
+import com.yandex.smur.marina.task6_async.async.*
 import com.yandex.smur.marina.task6_async.database.DBHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
@@ -31,12 +26,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var contentValues: ContentValues
     private lateinit var dbHelper: DBHelper
     private var contacts: MutableList<Contact> = ArrayList()
-    private lateinit var repository : RepositoryInterface
+    private lateinit var repository: RepositoryInterface
+    private lateinit var loadAsyncSetting: String
 
-    companion object{
+    companion object {
         private val THREADPOOLEXECUTER_HANDLER = "THREADPOOLEXECUTER_HANDLER"
         private val COMPLETABLEFUTURE_THREADPOOLEXECUTOR = "COMPLETABLEFUTURE_THREADPOOLEXECUTOR"
         private val RXJAVA = "RXJAVA"
+        private val PREF_NAME = "asyncTypePref"
+        private val PREF_SAVE_KEY = "ASYNC_TYPE_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,17 +45,16 @@ class MainActivity : AppCompatActivity() {
         dataBase = dbHelper.writableDatabase;
         contentValues = ContentValues();
 
+        loadAsyncSettings()
+
         val str = intent.getStringExtra("async")
 
-        if (str == THREADPOOLEXECUTER_HANDLER) {
-            repository = ThreadPoolExecutorHandler(contacts, dataBase, adapter)
-        } else if (str == COMPLETABLEFUTURE_THREADPOOLEXECUTOR) {
-            repository = CompletableFutureThreadPoolExecutor(contacts, dataBase, adapter)
-        } else if (str == RXJAVA) {
-            repository = RxJava(contacts, dataBase, adapter)
-        }
+        repositorySwitch()
+        contacts = repository.addContactsFromDataBase(object : DBListener<MutableList<Contact>> {
+            override fun onDataReceived(data: MutableList<Contact>) {
+            }
 
-        contacts = repository.addContactsFromDataBase()
+        })
 
         persons = findViewById<RecyclerView>(R.id.persons).apply {
             viewManager = LinearLayoutManager(this@MainActivity)
@@ -79,8 +76,35 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, 2)
         })
 
-
+        buttonSetting.setOnClickListener {
+            val intent = Intent(this@MainActivity, SettingActivity::class.java)
+            startActivity(intent)
+        }
         searchListener()
+    }
+
+
+    private fun loadAsyncSettings() {
+        loadAsyncSetting = loadAsyncType()
+    }
+
+    private fun repositorySwitch() {
+        when (loadAsyncSetting) {
+            THREADPOOLEXECUTER_HANDLER -> {
+                repository = ThreadPoolExecutorHandler(dbHelper)
+            }
+            COMPLETABLEFUTURE_THREADPOOLEXECUTOR -> {
+                repository = CompletableFutureThreadPoolExecutor(dbHelper)
+            }
+            RXJAVA -> {
+                repository = RxJava(dbHelper)
+            }
+        }
+    }
+
+    private fun loadAsyncType(): String {
+        val sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        return sharedPreferences.getString(PREF_SAVE_KEY, THREADPOOLEXECUTER_HANDLER).toString()
     }
 
     private fun searchListener() {
@@ -92,10 +116,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                adapter = (persons.adapter as ContactListAdapter?)!!
-                if (adapter != null) {
-                    filter(editable.toString())
-                }
+
+                filter(editable.toString())
+
             }
         })
     }
@@ -116,7 +139,12 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 var contact = data!!.getSerializableExtra(Contact::class.java.simpleName) as Contact
                 updateList(contact)
-                repository.addContactToDataBase(contact)
+                repositorySwitch()
+                repository.addContactToDataBase(contact, object : DBListener<Contact> {
+                    override fun onDataReceived(data: Contact) {
+                    }
+
+                })
             }
         }
 
@@ -124,7 +152,12 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == RESULT_CANCELED) {
                 var contact = data!!.getSerializableExtra(Contact::class.java.simpleName) as Contact
                 updateListAfterRemove(contact)
-                repository.deleteContactFromDataBase(contact)
+                repositorySwitch()
+                repository.deleteContactFromDataBase(contact, object : DBListener<Contact> {
+                    override fun onDataReceived(data: Contact) {
+                    }
+
+                })
             }
         }
 
@@ -132,7 +165,12 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 var contact = data!!.getSerializableExtra(Contact::class.java.simpleName) as Contact
                 updateListBeforeChange(contact)
-                repository.editCountFromDataBase(contact)
+                repositorySwitch()
+                repository.editCountFromDataBase(contact, object : DBListener<Contact> {
+                    override fun onDataReceived(data: Contact) {
+                    }
+
+                })
             }
         }
         emptyList()

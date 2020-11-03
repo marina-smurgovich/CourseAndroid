@@ -1,12 +1,7 @@
 package com.yandex.smur.marina.task6_async.async
 
-import android.content.ContentValues
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.yandex.smur.marina.task6_async.Contact
-import com.yandex.smur.marina.task6_async.ContactListAdapter
+import com.yandex.smur.marina.task6_async.database.DBHelper
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
@@ -14,83 +9,53 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class RxJava(
-        private var contacts: MutableList<Contact>,
-        private val dataBase: SQLiteDatabase,
-        private val adapter: ContactListAdapter,
-) : RepositoryInterface {
+class RxJava(private val dbHelper: DBHelper) : RepositoryInterface {
 
-    private lateinit var disposable : Disposable
+    private lateinit var disposable: Disposable
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    override fun addContactsFromDataBase(): MutableList<Contact> {
+    override fun addContactsFromDataBase(listener: DBListener<MutableList<Contact>>): MutableList<Contact> {
         disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
-            val contacts: MutableList<Contact> = ArrayList()
-            val cursor: Cursor = dataBase.rawQuery("SELECT * FROM ContactPlus", null)
-
-            if (cursor != null) {
-                cursor.moveToFirst()
-                while (cursor.moveToNext()) {
-                    val idCursor: Double = cursor.getDouble(0)
-                    val nameCursor: String = cursor.getString(1)
-                    val infoCursor: String = cursor.getString(2)
-                    val imageCursor: Int = cursor.getInt(3)
-
-                    val contact = Contact(idCursor, nameCursor, infoCursor, imageCursor)
-                    contacts.add(contact)
-                }
-            }
-            cursor.close()
+            emitter.onNext(dbHelper.addContactsFromDataBase())
+            emitter.onComplete()
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ()
-
-        return contacts
+                .subscribe()
+        return dbHelper.addContactsFromDataBase()
     }
 
-    override fun editCountFromDataBase(contact: Contact) {
-        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
-            val contentValues: ContentValues = ContentValues()
-            contentValues.put("KEY_ID", contact.id)
-            contentValues.put("KEY_NAME", contact.name)
-            contentValues.put("KEY_INFO", contact.info)
-            contentValues.put("KEY_IMAGE", contact.image)
 
-            dataBase.update("ContactPlus", contentValues, "KEY_ID =? ", arrayOf(contact.id.toString()))
+    override fun editCountFromDataBase(contact: Contact, listener: DBListener<Contact>) {
+        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<Contact> ->
+            dbHelper.editCountFromDataBase(contact)
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ()
+                .subscribe()
     }
 
-    override fun deleteContactFromDataBase(contact: Contact) {
-        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
-            val id: Double = contact.id
-
-            dataBase.delete("ContactPlus", "KEY_ID = " + id, null)
+    override fun deleteContactFromDataBase(contact: Contact, listener: DBListener<Contact>) {
+        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<Contact> ->
+            dbHelper.deleteContactFromDataBase(contact)
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ()
+                .subscribe()
     }
 
-    override fun addContactToDataBase(contact: Contact) {
-        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<MutableList<Contact>> ->
-            val contentValues: ContentValues = ContentValues()
-            contentValues.put("KEY_ID", contact.id)
-            contentValues.put("KEY_NAME", contact.name)
-            contentValues.put("KEY_INFO", contact.info)
-            contentValues.put("KEY_IMAGE", contact.image)
-
-            dataBase.insert("ContactPlus", null, contentValues)
+    override fun addContactToDataBase(contact: Contact, listener: DBListener<Contact>) {
+        disposable = Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<Contact> ->
+            dbHelper.addContactToDataBase(contact)
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ()    }
+                .subscribe()
+    }
 
     override fun closeThreads() {
+        dbHelper.close()
         disposable.dispose()
     }
+
 
 }

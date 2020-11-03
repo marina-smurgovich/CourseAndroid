@@ -1,85 +1,63 @@
 package com.yandex.smur.marina.task6_async.async
 
-import android.content.ContentValues
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.yandex.smur.marina.task6_async.Contact
-import com.yandex.smur.marina.task6_async.ContactListAdapter
+import com.yandex.smur.marina.task6_async.database.DBHelper
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
+import java.util.function.Consumer
 
-class CompletableFutureThreadPoolExecutor(
-        private var contacts: MutableList<Contact>,
-        private val dataBase: SQLiteDatabase,
-        private val adapter: ContactListAdapter,
-) : RepositoryInterface{
+class CompletableFutureThreadPoolExecutor(private val dbHelper: DBHelper) : RepositoryInterface {
 
-    private val threadPoolExecutor: ThreadPoolExecutor = Executors.newFixedThreadPool(1) as ThreadPoolExecutor
+    val threadPoolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(1, 1, 0L, TimeUnit.SECONDS, LinkedBlockingQueue())
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    override fun addContactsFromDataBase(): MutableList<Contact> {
-        CompletableFuture.runAsync({
-            val contacts: MutableList<Contact> = ArrayList()
-            val cursor: Cursor = dataBase.rawQuery("SELECT * FROM ContactPlus", null)
-
-            if (cursor != null) {
-                cursor.moveToFirst()
-                while (cursor.moveToNext()) {
-                    val idCursor: Double = cursor.getDouble(0)
-                    val nameCursor: String = cursor.getString(1)
-                    val infoCursor: String = cursor.getString(2)
-                    val imageCursor: Int = cursor.getInt(3)
-
-                    val contact = Contact(idCursor, nameCursor, infoCursor, imageCursor)
-                    contacts.add(contact)
-                }
+    override fun addContactsFromDataBase(listener: DBListener<MutableList<Contact>>): MutableList<Contact> {
+        val list: MutableList<Contact> = mutableListOf()
+        val completableFuture: CompletableFuture<Void> = CompletableFuture.runAsync(object : Runnable {
+            override fun run() {
+                list.addAll(dbHelper.addContactsFromDataBase())
             }
-            cursor.close()
         }, threadPoolExecutor)
-        return contacts
+        completableFuture.thenAccept(Consumer { result -> listener.onDataReceived(list) })
+        completableFuture.get()
+
+        return list
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    override fun editCountFromDataBase(contact: Contact) {
-        CompletableFuture.runAsync({
-            val contentValues: ContentValues = ContentValues()
-            contentValues.put("KEY_ID", contact.id)
-            contentValues.put("KEY_NAME", contact.name)
-            contentValues.put("KEY_INFO", contact.info)
-            contentValues.put("KEY_IMAGE", contact.image)
-
-            dataBase.update("ContactPlus", contentValues, "KEY_ID =? ", arrayOf(contact.id.toString()))
+    override fun editCountFromDataBase(contact: Contact, listener: DBListener<Contact>) {
+        val completableFuture: CompletableFuture<Void> = CompletableFuture.runAsync(object : Runnable {
+            override fun run() {
+                dbHelper.editCountFromDataBase(contact)
+            }
         }, threadPoolExecutor)
+        completableFuture.thenAccept(Consumer { result -> listener.onDataReceived(contact) })
+        completableFuture.get()
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    override fun deleteContactFromDataBase(contact: Contact) {
-        CompletableFuture.runAsync({
-            val id: Double = contact.id
-
-            dataBase.delete("ContactPlus", "KEY_ID = " + id, null)
+    override fun deleteContactFromDataBase(contact: Contact, listener: DBListener<Contact>) {
+        val completableFuture: CompletableFuture<Void> = CompletableFuture.runAsync(object : Runnable {
+            override fun run() {
+                dbHelper.deleteContactFromDataBase(contact)
+            }
         }, threadPoolExecutor)
+        completableFuture.thenAccept(Consumer { result -> listener.onDataReceived(contact) })
+        completableFuture.get()
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    override fun addContactToDataBase(contact: Contact) {
-        CompletableFuture.runAsync({
-            val contentValues: ContentValues = ContentValues()
-            contentValues.put("KEY_ID", contact.id)
-            contentValues.put("KEY_NAME", contact.name)
-            contentValues.put("KEY_INFO", contact.info)
-            contentValues.put("KEY_IMAGE", contact.image)
-
-            dataBase.insert("ContactPlus", null, contentValues)
+    override fun addContactToDataBase(contact: Contact, listener: DBListener<Contact>) {
+        val completableFuture: CompletableFuture<Void> = CompletableFuture.runAsync(object : Runnable {
+            override fun run() {
+                dbHelper.addContactToDataBase(contact)
+            }
         }, threadPoolExecutor)
+        completableFuture.thenAccept(Consumer { result -> listener.onDataReceived(contact) })
+        completableFuture.get()
     }
 
     override fun closeThreads() {
-        threadPoolExecutor.shutdown()
+        dbHelper.close()
     }
+
 
 }

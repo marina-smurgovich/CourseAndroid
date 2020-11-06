@@ -9,5 +9,6 @@
     <color name="grey2">#BAB2A6</color>
     <color name="blue">#192D9E</color>
     <color name="litegrey">#F2F9FA</color>
+    <color name="myColor">#03DAC5</color>
 
 </resources>

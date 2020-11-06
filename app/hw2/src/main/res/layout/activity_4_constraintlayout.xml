@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <Button
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -120,42 +120,42 @@
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
     </LinearLayout>
 
     <LinearLayout
@@ -237,21 +237,21 @@
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/rectangle" />
+            app:srcCompat="@drawable/rectangle" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

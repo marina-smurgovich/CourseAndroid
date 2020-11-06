@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Task 9_contentprovider</string>
+    <string name="Search">Search contacts</string>
+    <string name="noContact">No contacts. Please add</string>
+</resources>

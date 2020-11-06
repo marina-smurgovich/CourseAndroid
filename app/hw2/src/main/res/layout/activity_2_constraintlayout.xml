@@ -29,7 +29,7 @@
             android:layout_gravity="right|bottom"
             android:background="@color/grey"
             android:padding="20dp"
-            android:src="@drawable/camera" />
+            app:srcCompat="@drawable/camera" />
     </FrameLayout>
 
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@color/white"
-                android:src="@drawable/location" />
+                app:srcCompat="@drawable/location" />
         </FrameLayout>
     </LinearLayout>
 

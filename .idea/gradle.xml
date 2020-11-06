@@ -14,11 +14,19 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app/hw2" />
             <option value="$PROJECT_DIR$/customview" />
-            <option value="$PROJECT_DIR$/homework2" />
-            <option value="$PROJECT_DIR$/homework22" />
-            <option value="$PROJECT_DIR$/homework23" />
+            <option value="$PROJECT_DIR$/dialog" />
             <option value="$PROJECT_DIR$/hw3" />
             <option value="$PROJECT_DIR$/myapplication" />
+            <option value="$PROJECT_DIR$/myfinalproject" />
+            <option value="$PROJECT_DIR$/task5" />
+            <option value="$PROJECT_DIR$/task6_async" />
+            <option value="$PROJECT_DIR$/task7" />
+            <option value="$PROJECT_DIR$/task7_" />
+            <option value="$PROJECT_DIR$/task7_broadcastreceiver_service" />
+            <option value="$PROJECT_DIR$/task7broadcastreceiverserver" />
+            <option value="$PROJECT_DIR$/task8_weather" />
+            <option value="$PROJECT_DIR$/task9_contentprovider" />
+            <option value="$PROJECT_DIR$/testbd" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

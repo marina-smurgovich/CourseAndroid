@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -10,7 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/attractions" />
+            app:srcCompat="@drawable/attractions" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/dining" />
+            app:srcCompat="@drawable/dining" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/education" />
+            app:srcCompat="@drawable/education" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/family" />
+            app:srcCompat="@drawable/family" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/health" />
+            app:srcCompat="@drawable/health" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/office" />
+            app:srcCompat="@drawable/office" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/promotions" />
+            app:srcCompat="@drawable/promotions" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -123,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/radio" />
+            app:srcCompat="@drawable/radio" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -139,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/recipes" />
+            app:srcCompat="@drawable/recipes" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -155,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/sports" />
+            app:srcCompat="@drawable/sports" />
 
         <TextView
             android:layout_width="wrap_content"
